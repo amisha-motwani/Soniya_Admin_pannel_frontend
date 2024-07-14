@@ -489,7 +489,7 @@ const Login = () => {
        <div className="bg-[#e1e2e4] min-vh-100 d-flex flex-row align-items-center">
       <CContainer>
         <CRow className="justify-content-center">
-          <CCol md={8}>
+          <CCol lg={8} md={10} sm={11}>
             <CCardGroup>
               <CCard className="p-1">
                 <CCardBody>
@@ -540,7 +540,7 @@ const Login = () => {
                         xs={12}
                         className="flex justify-end mb-3 underline cursor-pointer text-sky-800 hover:text-sky-900"
                       >
-                        <h1 onClick={handleForget}>Forget password?</h1>
+                        <h1 className="text-[16px]" onClick={handleForget}>Forgot password?</h1>
                       </CCol>
                     </CRow>
                     <CRow>
@@ -560,8 +560,9 @@ const Login = () => {
                 </CCardBody>
               </CCard>
               <CCard
-                className="text-white py-[2%] w-[44%] flex flex-col justify-between items-center"
+                className="text-white py-[2%] w-[44%] flex flex-col justify-between items-center loginImage"
                 style={{
+                 
                   backgroundImage: `url(${BusinessImage})`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
