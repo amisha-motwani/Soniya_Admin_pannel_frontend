@@ -33,7 +33,7 @@ const AppHeader = () => {
         </CHeaderToggler>
         <CHeaderBrand className="mx-auto d-md-none" to="/">
         
-        <h5 className="text-start sm:text-[20px] text-[12px]"><b> MK TEXTILE</b></h5>
+        <h5 className="text-start sm:text-[20px] text-[17px]"><b> MK TEXTILE</b></h5>
         </CHeaderBrand>
         {/* <CHeaderNav className="d-none d-md-flex me-auto">
           <CNavItem>
