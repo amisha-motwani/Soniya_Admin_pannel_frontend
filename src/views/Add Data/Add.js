@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Modal, Button } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import { useFormik } from "formik";
 import { formSchema } from "../Schema/index.js";
@@ -8,8 +9,10 @@ import colorWheel from "../../colorWheel.png";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import BASE_URL from "src/API/Api.js";
-import {CSpinner,} from "@coreui/react";
-
+import { CTooltip } from "@coreui/react";
+import { CSpinner } from "@coreui/react";
+// import Button from '@mui/material/Button';
+import Tooltip from "@mui/material/Tooltip";
 
 const initialValues = {
   name: "",
@@ -97,7 +100,7 @@ function PostData() {
     validationSchema: formSchema,
 
     onSubmit: async (values) => {
-      setLoading(true); 
+      setLoading(true);
       console.log("submit is clicked");
       console.log("value-->", values);
       const formData = new FormData();
@@ -203,7 +206,7 @@ function PostData() {
         }
       } catch (error) {
         console.log("this is error", error);
-      }finally {
+      } finally {
         setLoading(false);
       }
     },
@@ -288,19 +291,21 @@ function PostData() {
 
   return (
     <>
-      <div className="w-[100%] flex justify-center mx-auto mb-4 ">
-        <Form.Select
-          aria-label="Default select example"
-          onChange={handleSelectChange}
-          style={{ width: "27%" }}
-        >
-          {/* <option>Open this select menu</option> */}
-          <option value="Teamwear">Add Teamwear</option>
-          <option value="Fitnesswear">Add Fitnesswear</option>
-          <option value="Sportswear">Add Sportswear</option>
-          <option value="Corporatewear">Add Corporatewear</option>
-        </Form.Select>
-      </div>
+      <CContainer fluid className="flex justify-center mx-auto mb-4 ">
+        <div className="md:w-[80%] w-[85%]">
+          <Form.Select
+            aria-label="Default select example"
+            onChange={handleSelectChange}
+            style={{ width: "100%" }}
+          >
+            {/* <option>Open this select menu</option> */}
+            <option value="Teamwear">Add Teamwear</option>
+            <option value="Fitnesswear">Add Fitnesswear</option>
+            <option value="Sportswear">Add Sportswear</option>
+            <option value="Corporatewear">Add Corporatewear</option>
+          </Form.Select>
+        </div>
+      </CContainer>
 
       {loading ? (
         <>
@@ -392,77 +397,45 @@ function PostData() {
                       />
                     </div>
                     <div className="flex gap-3 flex-wrap w-[90%]">
-                      {confirmColor ? (
-                        <CAlert>
-                          <div className="absolute ms-[250px] md:mt-[-100px] mt-[-180px] z-30 w-[260px] px-2 py-3 bg-slate-400 text-white rounded-lg">
-                            <div className="">
-                              Do you want to add this color?
-                            </div>
-                            <div
-                              className="h-[20px] w-[70%] m-auto my-1"
-                              style={{ backgroundColor: selectedColor }}
-                            ></div>
-                            <div className="flex gap-3 justify-center mt-2">
-                              <button
-                                className="bg-green-500 px-2 rounded-lg"
-                                onClick={addColor}
-                              >
-                                Yes
-                              </button>
-                              <button
-                                className="bg-red-500 px-2 rounded-lg"
-                                onClick={removeColor}
-                              >
-                                No
-                              </button>
-                            </div>
-                          </div>
-                        </CAlert>
-                      ) : null}
-
                       {openColorCard ? (
-                        <div className="absolute ms-[3%] lg:mt-[-20%]  mt-[-22%] z-30 w-[260px]">
+                        <div className="absolute ms-[3%] lg:mt-[-20%] mt-[-22%] z-30 w-[260px]">
                           <SketchPicker
                             color={selectedColor}
                             onChange={handleColorChange}
                             onClose={handleCloseColor}
                           />
+                          <button
+                            className="bg-green-500 px-2  w-[85%] text-white"
+                            onClick={addColor}
+                          >
+                            ADD
+                          </button>
                         </div>
                       ) : null}
-                      {deleteColorCard ? (
-                        <CAlert>
-                          <div className="absolute ms-[-60px] lg:mt-[-190px] mt-[-220px] z-30 w-[260px] px-2 py-3 bg-slate-400 text-white rounded-lg">
-                            <div className="text-center my-2">
-                              Do you want to delete this color?
-                            </div>
-                            <div
-                              className="h-[20px] w-[70%] m-auto my-1"
-                              style={{ backgroundColor: selectedColor }}
-                            ></div>
-                            <div className="flex gap-3 justify-center mt-2">
-                              <button
-                                className="bg-green-500 px-2 rounded-lg"
+
+                      {values.colors.map((color, index) => (
+                        <>
+                          <div className="block">
+                            <div className="relative group">
+                              <div
+                                className="bg-white text-black text-[13px] px-2 py-1 cursor-pointer rounded-md z-10 absolute top-[-23px] left-[48%] transform -translate-x-1/2 hidden group-hover:block"
                                 onClick={deleteColor}
                               >
-                                Yes
-                              </button>
-                              <button
-                                className="bg-red-500 px-2 rounded-lg"
-                                onClick={keepIt}
-                              >
-                                No
-                              </button>
+                                Delete?
+                              </div>
+                              <div
+                                className="w-[8px] h-[8px] bg-white mx-[26px] hidden group-hover:block "
+                                style={{ transform: "rotate(45deg)" }}
+                              ></div>
+                              <div
+                                key={index}
+                                className="relative w-[30px] h-[30px] ms-[15px] my-1"
+                                style={{ backgroundColor: color }}
+                                onClick={() => handleDeleteCard(color)}
+                              ></div>
                             </div>
                           </div>
-                        </CAlert>
-                      ) : null}
-                      {values.colors.map((color, index) => (
-                        <div
-                          key={index}
-                          className="relative w-[30px] h-[30px]"
-                          style={{ backgroundColor: color }}
-                          onClick={() => handleDeleteCard(color)}
-                        ></div>
+                        </>
                       ))}
                     </div>
                     {errors.colors && touched.colors ? (
