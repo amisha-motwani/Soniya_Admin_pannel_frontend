@@ -8,7 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useLocation } from "react-router-dom";
 import BASE_URL from "src/API/Api";
 import Form from "react-bootstrap/Form";
-import {CSpinner,} from "@coreui/react";
+import { CSpinner } from "@coreui/react";
 
 const initialValues = {
   name: "",
@@ -446,71 +446,31 @@ function EditPost() {
                       />
                     </div>
                     <div className="flex gap-3 flex-wrap w-[90%]">
-                      {confirmColor ? (
+                    
+                      {colors?.map((currentColor, index) => (
                         <>
-                          <CAlert>
-                            <div className="absolute ms-[250px] lg:mt-[-190px] mt-[-220px] z-30 w-[260px] px-2 py-3 bg-slate-400 text-white rounded-lg">
-                              <div className="">
-                                Do you want to add this color?
+                        <div className="block">
+                            <div className="relative group">
+                              <div
+                                className="bg-white text-black text-[13px] px-2 py-1 cursor-pointer rounded-md z-10 absolute top-[-23px] left-[48%] transform -translate-x-1/2 hidden group-hover:block"
+                                onClick={deleteColor}
+                              >
+                                Delete?
                               </div>
                               <div
-                                className="w-[90%] h-[40px] mx-auto my-3"
-                                style={{ background: selectedColor }}
+                                className="w-[8px] h-[8px] bg-white mx-[26px] hidden group-hover:block "
+                                style={{ transform: "rotate(45deg)"}}
                               ></div>
-                              <div className="flex justify-between px-2 my-2">
-                                <button
-                                  onClick={addColor}
-                                  className="w-[fit-content] h-[fit-content] rounded-full bg-green-500 px-2 py-1"
-                                >
-                                  Yes
-                                </button>
-                                <button
-                                  onClick={removeColor}
-                                  className="w-[fit-content] h-[fit-content] rounded-full bg-red-500 px-2 py-1"
-                                >
-                                  close
-                                </button>
-                              </div>
+                               <div
+                            key={index}
+                            className="w-[30px] h-[30px] rounded-md"
+                            style={{ backgroundColor: currentColor }}
+                            onClick={() => handleDeleteCard(currentColor)}
+                          ></div>
                             </div>
-                          </CAlert>
+                          </div>
+                         
                         </>
-                      ) : (
-                        <></>
-                      )}
-                      {deleteColorCard ? (
-                        <>
-                          <CAlert>
-                            <div className="absolute ms-[-10px] mt-[-250px] z-30 w-[260px] px-2 py-3 bg-slate-400 text-white rounded-lg">
-                              <div className="">
-                                Do you want to remove this color?
-                              </div>
-                              <div className="flex justify-between px-2 my-2">
-                                <button
-                                  onClick={keepIt}
-                                  className="w-[fit-content] h-[fit-content] rounded-full bg-green-500 px-2 py-1"
-                                >
-                                  Keep it
-                                </button>
-                                <button
-                                  onClick={deleteColor}
-                                  className="w-[fit-content] h-[fit-content] rounded-full bg-red-500 px-2 py-1"
-                                >
-                                  Delete it
-                                </button>
-                              </div>
-                            </div>
-                          </CAlert>
-                        </>
-                      ) : (
-                        <></>
-                      )}
-                      {colors?.map((currentColor, index) => (
-                        <div
-                          key={index}
-                          className="w-[30px] h-[30px] rounded-md"
-                          style={{ backgroundColor: currentColor }}
-                          onClick={() => handleDeleteCard(currentColor)}
-                        ></div>
                       ))}
                       {openColorCard ? (
                         <>
@@ -525,6 +485,12 @@ function EditPost() {
                               color={selectedColor}
                               onChangeComplete={handleColorChange}
                             />
+                           <button
+                            className="bg-green-500 px-2  w-[85%] text-white"
+                            onClick={addColor}
+                          >
+                            ADD
+                          </button>
                           </div>
                         </>
                       ) : (
