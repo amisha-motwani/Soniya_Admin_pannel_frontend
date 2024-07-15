@@ -323,8 +323,8 @@ function PostData() {
               onSubmit={handleSubmit}
               className="lg:w-[80%] md:w-[90%] w-[97%] mx-auto h-[fit-content] my-auto bg-[#deebf5] rounded-[13px] shadow-2xl text-black "
             >
-              <h1 className="md:text-[20px] py-3 px-auto border-b-[1px] border-sky-200 text-center">
-                <b>Add {selectedValue} data :</b>
+              <h1 className="sm:text-[22px] text-[17px] py-3 px-auto border-b-[1px] border-sky-200 text-center">
+                <b>Add {selectedValue} data</b>
               </h1>
               <div className="w-[100%] h-[fit-content] pt-4 text-black">
                 <div className="w-[90%] mx-auto md:text-[17px] border-1 my-3">
