@@ -137,7 +137,8 @@ function View() {
             className="w-[270px] h-[370px] border-1 border-gray-600 rounded-xl my-2"
           >
             <img
-              src={`${BASE_URL}/${data?.image}`}
+              // src={`${BASE_URL}/${data?.image}`}
+              src={`${BASE_URL}/${data.image.split(", ")[0]}`}
               alt={data?.title}
               className="h-[280px] w-[100%] mx-auto rounded-t-xl"
             />
