@@ -64,6 +64,7 @@ const initialValues = {
 };
 
 function PostData() {
+  const [images, setImages] = useState([]);
   const [selectedValue, setSelectedValue] = useState("Teamwear");
   const [sleeveType, setSleeveType] = useState("");
   const [printingArea, setPrintingArea] = useState("");
@@ -104,7 +105,26 @@ function PostData() {
       console.log("submit is clicked");
       console.log("value-->", values);
       const formData = new FormData();
-      formData.append("image", image);
+
+      // Prepare an array to store image names
+      const imageNames = [];
+
+      // Iterate over images array
+      images.forEach((image, index) => {
+        // Construct image name in the format: lastModified + name
+        const imageName = `${image.lastModified}${image.name}`;
+        // Append image to formData with consistent key "image"
+        formData.append(`image`, image, imageName); // Use "image" as the key
+        // Push the constructed imageName to imageNames array
+        imageNames.push(imageName);
+      });
+
+      // Join image names with comma "," to form a single string
+      const joinedImageNames = imageNames.join(" , ");
+
+      // Append the joined image names as a single string to formData
+      formData.append("image", joinedImageNames);
+
       formData.append("title", values.name);
       formData.append("description", values.description);
       formData.append("fabric", values.fabric);
@@ -213,7 +233,9 @@ function PostData() {
   });
 
   const handleImageChange = (e) => {
-    setImage(e.target.files[0]);
+    const files = Array.from(e.target.files);
+    // Append new files to the existing images array
+    setImages([...images, ...files]);
   };
 
   const handleCheckChange = (size) => {
@@ -288,6 +310,7 @@ function PostData() {
   const handlePrintingCharges = (e) => {
     setPrintingCharges(e.target.value);
   };
+  console.log("Images-->", images);
 
   return (
     <>
@@ -301,7 +324,7 @@ function PostData() {
             {/* <option>Open this select menu</option> */}
             <option value="Teamwear">Add Teamwear</option>
             <option value="Fitnesswear">Add Fitnesswear</option>
-            <option value="Sportswear">Add Sportswear</option>
+            <option value="Sportswear">Add Spor tswear</option>
             <option value="Corporatewear">Add Corporatewear</option>
           </Form.Select>
         </div>
@@ -367,7 +390,8 @@ function PostData() {
                     ) : null}
                   </div>
                 </div>
-                <div className="w-[90%] mx-auto md:text-[17px] my-3">
+
+                {/* <div className="w-[90%] mx-auto md:text-[17px] my-3">
                   <div className="w-[100%] flex justify-start my-3">
                     <label className="my-auto md:text-end text-start">
                       Image of the product :
@@ -381,6 +405,45 @@ function PostData() {
                       onChange={handleImageChange}
                     />
                   </div>
+                </div> */}
+
+                <div className="w-[90%] mx-auto md:text-[17px] my-3">
+                  <div className="mb-2">
+                    <Form.Label>Upload Images</Form.Label>
+                    <input
+                      type="file"
+                      name="images"
+                      accept="image/*"
+                      multiple
+                      onChange={handleImageChange}
+                      required
+                    />
+                    {errors.file && touched.file ? (
+                      <p className="text-red-700 ms-2">{errors.file}</p>
+                    ) : null}
+                  </div>
+                </div>
+                <div>
+                  {images.length > 0 && (
+                    <div>
+                      {/* <h5>Added Images:</h5> */}
+                      <div className="d-flex flex-wrap w-[90%] mx-auto">
+                        {images.map((image, index) => (
+                          <div key={index} className="m-2">
+                            <img
+                              src={URL.createObjectURL(image)}
+                              alt={`Image ${index}`}
+                              style={{
+                                maxWidth: "100px",
+                                maxHeight: "100px",
+                                marginRight: "10px",
+                              }}
+                            />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 <div className="w-[90%] mx-auto md:text-[17px] my-3">
