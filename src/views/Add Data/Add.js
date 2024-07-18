@@ -324,7 +324,7 @@ function PostData() {
             {/* <option>Open this select menu</option> */}
             <option value="Teamwear">Add Teamwear</option>
             <option value="Fitnesswear">Add Fitnesswear</option>
-            <option value="Sportswear">Add Sportswear</option>
+            <option value="Sportswear">Add Spor tswear</option>
             <option value="Corporatewear">Add Corporatewear</option>
           </Form.Select>
         </div>
@@ -391,25 +391,9 @@ function PostData() {
                   </div>
                 </div>
 
-                {/* <div className="w-[90%] mx-auto md:text-[17px] my-3">
-                  <div className="w-[100%] flex justify-start my-3">
-                    <label className="my-auto md:text-end text-start">
-                      Image of the product :
-                    </label>
-                  </div>
-                  <div className="w-[100%] justify-start">
-                    <input
-                      className=""
-                      type="file"
-                      accept="image/*"
-                      onChange={handleImageChange}
-                    />
-                  </div>
-                </div> */}
-
                 <div className="w-[90%] mx-auto md:text-[17px] my-3">
                   <div className="mb-2">
-                    <Form.Label>Upload Images</Form.Label>
+                    <Form.Label className="mx-2">Upload Images</Form.Label>
                     <input
                       type="file"
                       name="images"
