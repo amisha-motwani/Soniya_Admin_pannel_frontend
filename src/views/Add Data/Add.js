@@ -324,7 +324,7 @@ function PostData() {
             {/* <option>Open this select menu</option> */}
             <option value="Teamwear">Add Teamwear</option>
             <option value="Fitnesswear">Add Fitnesswear</option>
-            <option value="Sportswear">Add Spor tswear</option>
+            <option value="Sportswear">Add Sportswear</option>
             <option value="Corporatewear">Add Corporatewear</option>
           </Form.Select>
         </div>
