@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { CAlert, CContainer } from "@coreui/react";
 import { SketchPicker } from "react-color";
 import colorWheel from "../../colorWheel.png";
+import { Carousel } from "react-bootstrap";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useLocation } from "react-router-dom";
@@ -52,7 +53,7 @@ function EditPost() {
   const secretKey = sessionStorage.getItem("secreteKey");
   const location = useLocation();
   const { data } = location.state;
-  console.log("teamData:==>", data);
+  console.log("Data:==>", data);
   console.log("colorData:==>", data.color);
   const colorData = data.color;
   const colorArray = colorData.split(",");
@@ -131,7 +132,8 @@ function EditPost() {
     47: false,
     48: false,
   });
-  const [image, setImage] = useState(null);
+  const [images, setImages] = useState([]);
+  const [editImage, setEditImage] = useState(false);
   const [apiResponse, setApiResponse] = useState();
   const [editSizes, setEditSizes] = useState(false);
   const [editColors, setEditColors] = useState(false);
@@ -157,7 +159,6 @@ function EditPost() {
     console.log("login is clicked");
     e.preventDefault();
     const formData = new FormData();
-    formData.append("image", image);
     formData.append("title", name);
     formData.append("fabric", fabric);
     formData.append("description", description);
@@ -166,6 +167,25 @@ function EditPost() {
     formData.append("sleeves_type", sleeveType);
     formData.append("printing_area", printingArea);
     formData.append("printing_charges", printingCharges);
+
+    // Prepare an array to store image names
+    const imageNames = [];
+
+    // Iterate over images array
+    images.forEach((image, index) => {
+      // Construct image name in the format: lastModified + name
+      const imageName = `${image.lastModified}${image.name}`;
+      // Append image to formData with consistent key "image"
+      formData.append(`image`, image, imageName); // Use "image" as the key
+      // Push the constructed imageName to imageNames array
+      imageNames.push(imageName);
+    });
+
+    // Join image names with comma "," to form a single string
+    const joinedImageNames = imageNames.join(" , ");
+
+    // Append the joined image names as a single string to formData
+    formData.append("image", joinedImageNames);
 
     const selectedSizes = Object.keys(checkedSizes).filter(
       (size) => checkedSizes[size]
@@ -215,9 +235,12 @@ function EditPost() {
   };
 
   const handleImageChange = (e) => {
-    setImage(e.target.files[0]);
+    const files = Array.from(e.target.files);
+    // Append new files to the existing images array
+    setImages([...images, ...files]);
   };
-  console.log("selected Image", image);
+
+  console.log("selected Images", images);
 
   const handleCheckSizeChange = (size) => {
     setCheckedSizes({
@@ -304,6 +327,17 @@ function EditPost() {
   const handlePrintingCharges = (e) => {
     setPrintingCharges(e.target.value);
   };
+  const handleEditImages = () => {
+    setEditImage(true);
+  }
+
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1
+  };
 
   console.log("colors", colors);
 
@@ -329,6 +363,66 @@ function EditPost() {
                 <b>Edit Product</b>
               </h1>
               <div className="w-[100%] h-[fit-content] pt-4">
+                {editImage ? (
+                  <>
+                    <div className="w-[90%] mx-auto md:text-[17px] my-3">
+                      <div className="mb-2">
+                        <Form.Label>Upload Images</Form.Label>
+                        <input
+                          type="file"
+                          name="images"
+                          accept="image/*"
+                          multiple
+                          onChange={handleImageChange}
+                          required
+                        />
+                        
+                      </div>
+                    </div>
+                    <div>
+                      {images.length > 0 && (
+                        <div>
+                          {/* <h5>Added Images:</h5> */}
+                          <div className="d-flex flex-wrap w-[90%] mx-auto">
+                            {images.map((image, index) => (
+                              <div key={index} className="m-2">
+                                <img
+                                  src={URL.createObjectURL(image)}
+                                  alt={`Image ${index}`}
+                                  style={{
+                                    maxWidth: "100px",
+                                    maxHeight: "100px",
+                                    marginRight: "10px",
+                                  }}
+                                />
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </>
+                ) : (
+                  <>
+                 
+                    <Carousel>
+                      {data.image.split(", ").map((image, idx) => (
+                        <Carousel.Item
+                          className="custom-carousel"
+                        >
+                          <img
+                            className="d-block w-[200px] mx-auto"
+                            src={`${BASE_URL}/${image}`}
+                            alt={data.title}
+                          />
+                        </Carousel.Item>
+                        
+                      ))}
+                     
+                    </Carousel>
+                    <h1 className="text-end text-[18px] text-blue-900 pe-5" onClick={handleEditImages}>Edit Images?</h1>
+                  </>
+                )}
                 <div className=" w-[90%] mx-auto md:text-[17px] mb-3">
                   <div className="w-[100%] flex  justify-start">
                     <label className="md:my-auto md:text-end text-start my-3">
@@ -363,20 +457,6 @@ function EditPost() {
                   </div>
                 </div>
 
-                <div className=" w-[90%]  mx-auto md:text-[17px] my-3">
-                  <div className=" w-[100%] flex  justify-start">
-                    <label className="md:my-auto my-3">
-                      Image of the product :
-                    </label>
-                  </div>
-                  <div className="w-[100%] justify-start md:ps-2">
-                    <input
-                      type="file"
-                      accept="image/*"
-                      onChange={handleImageChange}
-                    />
-                  </div>
-                </div>
                 {editSizes ? (
                   <>
                     <div className="w-[90%] mx-auto  md:text-[17px] my-3">
@@ -446,10 +526,9 @@ function EditPost() {
                       />
                     </div>
                     <div className="flex gap-3 flex-wrap w-[90%]">
-                    
                       {colors?.map((currentColor, index) => (
                         <>
-                        <div className="block">
+                          <div className="block">
                             <div className="relative group">
                               <div
                                 className="bg-white text-black text-[13px] px-2 py-1 cursor-pointer rounded-md z-10 absolute top-[-23px] left-[48%] transform -translate-x-1/2 hidden group-hover:block"
@@ -459,17 +538,16 @@ function EditPost() {
                               </div>
                               <div
                                 className="w-[8px] h-[8px] bg-white mx-[26px] hidden group-hover:block "
-                                style={{ transform: "rotate(45deg)"}}
+                                style={{ transform: "rotate(45deg)" }}
                               ></div>
-                               <div
-                            key={index}
-                            className="w-[30px] h-[30px] rounded-md"
-                            style={{ backgroundColor: currentColor }}
-                            onClick={() => handleDeleteCard(currentColor)}
-                          ></div>
+                              <div
+                                key={index}
+                                className="w-[30px] h-[30px] rounded-md"
+                                style={{ backgroundColor: currentColor }}
+                                onClick={() => handleDeleteCard(currentColor)}
+                              ></div>
                             </div>
                           </div>
-                         
                         </>
                       ))}
                       {openColorCard ? (
@@ -485,12 +563,12 @@ function EditPost() {
                               color={selectedColor}
                               onChangeComplete={handleColorChange}
                             />
-                           <button
-                            className="bg-green-500 px-2  w-[85%] text-white"
-                            onClick={addColor}
-                          >
-                            ADD
-                          </button>
+                            <button
+                              className="bg-green-500 px-2  w-[85%] text-white"
+                              onClick={addColor}
+                            >
+                              ADD
+                            </button>
                           </div>
                         </>
                       ) : (
