@@ -367,7 +367,7 @@ function EditPost() {
                   <>
                     <div className="w-[90%] mx-auto md:text-[17px] my-3">
                       <div className="mb-2">
-                        <Form.Label>Upload Images</Form.Label>
+                        <Form.Label className="mx-2">Upload Images</Form.Label>
                         <input
                           type="file"
                           name="images"
