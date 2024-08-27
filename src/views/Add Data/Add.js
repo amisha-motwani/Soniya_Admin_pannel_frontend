@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Modal, Button } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import { useFormik } from "formik";
 import { formSchema } from "../Schema/index.js";
@@ -8,8 +9,10 @@ import colorWheel from "../../colorWheel.png";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import BASE_URL from "src/API/Api.js";
-import {CSpinner,} from "@coreui/react";
-
+import { CTooltip } from "@coreui/react";
+import { CSpinner } from "@coreui/react";
+// import Button from '@mui/material/Button';
+import Tooltip from "@mui/material/Tooltip";
 
 const initialValues = {
   name: "",
@@ -25,31 +28,18 @@ const initialValues = {
   Readymade_collar: false,
   checkedSizes: {
     22: false,
-    23: false,
     24: false,
-    25: false,
     26: false,
-    27: false,
     28: false,
-    29: false,
     30: false,
-    31: false,
     32: false,
-    33: false,
     34: false,
-    35: false,
     36: false,
-    37: false,
     38: false,
-    39: false,
     40: false,
-    41: false,
     42: false,
-    43: false,
     44: false,
-    45: false,
     46: false,
-    47: false,
     48: false,
   },
   checkedCollarTypes: {
@@ -61,6 +51,7 @@ const initialValues = {
 };
 
 function PostData() {
+  const [images, setImages] = useState([]);
   const [selectedValue, setSelectedValue] = useState("Teamwear");
   const [sleeveType, setSleeveType] = useState("");
   const [printingArea, setPrintingArea] = useState("");
@@ -97,11 +88,30 @@ function PostData() {
     validationSchema: formSchema,
 
     onSubmit: async (values) => {
-      setLoading(true); 
+      setLoading(true);
       console.log("submit is clicked");
       console.log("value-->", values);
       const formData = new FormData();
-      formData.append("image", image);
+
+      // Prepare an array to store image names
+      const imageNames = [];
+
+      // Iterate over images array
+      images.forEach((image, index) => {
+        // Construct image name in the format: lastModified + name
+        const imageName = `${image.lastModified}${image.name}`;
+        // Append image to formData with consistent key "image"
+        formData.append(`image`, image, imageName); // Use "image" as the key
+        // Push the constructed imageName to imageNames array
+        imageNames.push(imageName);
+      });
+
+      // Join image names with comma "," to form a single string
+      const joinedImageNames = imageNames.join(" , ");
+
+      // Append the joined image names as a single string to formData
+      formData.append("image", joinedImageNames);
+      formData.append("category", selectedValue);
       formData.append("title", values.name);
       formData.append("description", values.description);
       formData.append("fabric", values.fabric);
@@ -137,7 +147,7 @@ function PostData() {
         };
 
         const Response = await fetch(
-          `${BASE_URL}/api/notes/add/${selectedValue}`,
+          `${BASE_URL}/api/notes/add/Product`,
           requestOptions
         );
 
@@ -203,14 +213,16 @@ function PostData() {
         }
       } catch (error) {
         console.log("this is error", error);
-      }finally {
+      } finally {
         setLoading(false);
       }
     },
   });
 
   const handleImageChange = (e) => {
-    setImage(e.target.files[0]);
+    const files = Array.from(e.target.files);
+    // Append new files to the existing images array
+    setImages([...images, ...files]);
   };
 
   const handleCheckChange = (size) => {
@@ -285,22 +297,27 @@ function PostData() {
   const handlePrintingCharges = (e) => {
     setPrintingCharges(e.target.value);
   };
+  console.log("Images-->", images);
 
   return (
     <>
-      <div className="w-[100%] flex justify-center mx-auto mb-4 ">
-        <Form.Select
-          aria-label="Default select example"
-          onChange={handleSelectChange}
-          style={{ width: "27%" }}
-        >
-          {/* <option>Open this select menu</option> */}
-          <option value="Teamwear">Add Teamwear</option>
-          <option value="Fitnesswear">Add Fitnesswear</option>
-          <option value="Sportswear">Add Sportswear</option>
-          <option value="Corporatewear">Add Corporatewear</option>
-        </Form.Select>
-      </div>
+      <CContainer fluid className="flex justify-center mx-auto mb-4 ">
+        <div className="md:w-[80%] w-[85%]">
+          <Form.Select
+            aria-label="Default select example"
+            onChange={handleSelectChange}
+            style={{ width: "100%" }}
+          >
+            {/* <option>Open this select menu</option> */}
+            <option value="Teamwear">Add Teamwear</option>
+            <option value="Fitnesswear">Add Fitnesswear</option>
+            <option value="Sportswear">Add Sportswear</option>
+            <option value="Corporatewear">Add Corporatewear</option>
+            <option value="Uniform">Add Uniform</option>
+            <option value="Accessories">Add Accessories</option>
+          </Form.Select>
+        </div>
+      </CContainer>
 
       {loading ? (
         <>
@@ -318,8 +335,8 @@ function PostData() {
               onSubmit={handleSubmit}
               className="lg:w-[80%] md:w-[90%] w-[97%] mx-auto h-[fit-content] my-auto bg-[#deebf5] rounded-[13px] shadow-2xl text-black "
             >
-              <h1 className="md:text-[20px] py-3 px-auto border-b-[1px] border-sky-200 text-center">
-                <b>Add {selectedValue} data :</b>
+              <h1 className="sm:text-[22px] text-[17px] py-3 px-auto border-b-[1px] border-sky-200 text-center">
+                <b>Add {selectedValue} data</b>
               </h1>
               <div className="w-[100%] h-[fit-content] pt-4 text-black">
                 <div className="w-[90%] mx-auto md:text-[17px] border-1 my-3">
@@ -350,32 +367,65 @@ function PostData() {
                     </label>
                   </div>
                   <div className=" w-[100%] justify-start ">
-                    <input
+                    {/* <input
+                      name="description"
+                      value={values.description}
+                      onChange={handleChange}
+                      className="w-[100%] rounded-[10px] border py-2 px-3 description_input"
+                      placeholder="Enter the description"
+                    /> */}
+                    <textarea
                       name="description"
                       value={values.description}
                       onChange={handleChange}
                       className="w-[100%] rounded-[10px] border py-2 px-3"
                       placeholder="Enter the description"
+                      rows="3"
                     />
+
                     {errors.description && touched.description ? (
                       <p className="text-red-700 ms-2">{errors.description}</p>
                     ) : null}
                   </div>
                 </div>
-                <div className="w-[90%] mx-auto md:text-[17px] my-3">
-                  <div className="w-[100%] flex justify-start my-3">
-                    <label className="my-auto md:text-end text-start">
-                      Image of the product :
-                    </label>
-                  </div>
-                  <div className="w-[100%] justify-start">
+
+                <div className="w-[90%] mx-auto md:text-[17px] mb-3 mt-4 pt-3">
+                  <div className="mb-2 ">
+                    <Form.Label className="mx-2">Upload Images</Form.Label>
                     <input
-                      className=""
                       type="file"
+                      name="images"
                       accept="image/*"
+                      multiple
                       onChange={handleImageChange}
+                      required
                     />
+                    {errors.file && touched.file ? (
+                      <p className="text-red-700 ms-2">{errors.file}</p>
+                    ) : null}
                   </div>
+                </div>
+                <div>
+                  {images.length > 0 && (
+                    <div>
+                      {/* <h5>Added Images:</h5> */}
+                      <div className="d-flex flex-wrap w-[90%] mx-auto">
+                        {images.map((image, index) => (
+                          <div key={index} className="m-2">
+                            <img
+                              src={URL.createObjectURL(image)}
+                              alt={`Image ${index}`}
+                              style={{
+                                maxWidth: "100px",
+                                maxHeight: "100px",
+                                marginRight: "10px",
+                              }}
+                            />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 <div className="w-[90%] mx-auto md:text-[17px] my-3">
@@ -392,77 +442,45 @@ function PostData() {
                       />
                     </div>
                     <div className="flex gap-3 flex-wrap w-[90%]">
-                      {confirmColor ? (
-                        <CAlert>
-                          <div className="absolute ms-[250px] md:mt-[-100px] mt-[-180px] z-30 w-[260px] px-2 py-3 bg-slate-400 text-white rounded-lg">
-                            <div className="">
-                              Do you want to add this color?
-                            </div>
-                            <div
-                              className="h-[20px] w-[70%] m-auto my-1"
-                              style={{ backgroundColor: selectedColor }}
-                            ></div>
-                            <div className="flex gap-3 justify-center mt-2">
-                              <button
-                                className="bg-green-500 px-2 rounded-lg"
-                                onClick={addColor}
-                              >
-                                Yes
-                              </button>
-                              <button
-                                className="bg-red-500 px-2 rounded-lg"
-                                onClick={removeColor}
-                              >
-                                No
-                              </button>
-                            </div>
-                          </div>
-                        </CAlert>
-                      ) : null}
-
                       {openColorCard ? (
-                        <div className="absolute ms-[3%] lg:mt-[-20%]  mt-[-22%] z-30 w-[260px]">
+                        <div className="absolute ms-[3%] lg:mt-[-20%] mt-[-22%] z-30 w-[260px]">
                           <SketchPicker
                             color={selectedColor}
                             onChange={handleColorChange}
                             onClose={handleCloseColor}
                           />
+                          <button
+                            className="bg-green-500 px-2  w-[85%] text-white"
+                            onClick={addColor}
+                          >
+                            ADD
+                          </button>
                         </div>
                       ) : null}
-                      {deleteColorCard ? (
-                        <CAlert>
-                          <div className="absolute ms-[-60px] lg:mt-[-190px] mt-[-220px] z-30 w-[260px] px-2 py-3 bg-slate-400 text-white rounded-lg">
-                            <div className="text-center my-2">
-                              Do you want to delete this color?
-                            </div>
-                            <div
-                              className="h-[20px] w-[70%] m-auto my-1"
-                              style={{ backgroundColor: selectedColor }}
-                            ></div>
-                            <div className="flex gap-3 justify-center mt-2">
-                              <button
-                                className="bg-green-500 px-2 rounded-lg"
+
+                      {values.colors.map((color, index) => (
+                        <>
+                          <div className="block">
+                            <div className="relative group">
+                              <div
+                                className="bg-white text-black text-[13px] px-2 py-1 cursor-pointer rounded-md z-10 absolute top-[-23px] left-[48%] transform -translate-x-1/2 hidden group-hover:block"
                                 onClick={deleteColor}
                               >
-                                Yes
-                              </button>
-                              <button
-                                className="bg-red-500 px-2 rounded-lg"
-                                onClick={keepIt}
-                              >
-                                No
-                              </button>
+                                Delete?
+                              </div>
+                              <div
+                                className="w-[8px] h-[8px] bg-white mx-[26px] hidden group-hover:block "
+                                style={{ transform: "rotate(45deg)" }}
+                              ></div>
+                              <div
+                                key={index}
+                                className="relative w-[30px] h-[30px] ms-[15px] my-1"
+                                style={{ backgroundColor: color }}
+                                onClick={() => handleDeleteCard(color)}
+                              ></div>
                             </div>
                           </div>
-                        </CAlert>
-                      ) : null}
-                      {values.colors.map((color, index) => (
-                        <div
-                          key={index}
-                          className="relative w-[30px] h-[30px]"
-                          style={{ backgroundColor: color }}
-                          onClick={() => handleDeleteCard(color)}
-                        ></div>
+                        </>
                       ))}
                     </div>
                     {errors.colors && touched.colors ? (
