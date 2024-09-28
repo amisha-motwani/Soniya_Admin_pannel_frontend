@@ -16,6 +16,7 @@ function View() {
   console.log("leyy", secretKey);
 
   const [selectedValue, setSelectedValue] = useState("Teamwear");
+  const [searchedProductCode, setSearchedProductCode] = useState("");
 
   const handleSelectChange = (e) => {
     setSelectedValue(e.target.value);
@@ -35,7 +36,7 @@ function View() {
       };
 
       const response = await fetch(
-        `${BASE_URL}/api/notes/fetchallSearched/Product?category=${selectedValue}`,
+        `${BASE_URL}/api/notes/fetchallSearched/Product?category=${selectedValue}&Product_code=${searchedProductCode}`,
         {
           method: "GET",
           headers: headers,
@@ -94,7 +95,7 @@ function View() {
 
   useEffect(() => {
     fetchData();
-  }, [selectedValue]);
+  }, [selectedValue, searchedProductCode]);
 
   if (loading) {
     return (
@@ -115,36 +116,47 @@ function View() {
 
   return (
     <>
-    <CContainer fluid className="flex justify-center mx-auto mb-4 ">
-        <div className="md:w-[80%] w-[85%]">
-        <Form.Select
-          aria-label="Default select example"
-          onChange={handleSelectChange}
-          style={{ width: "100%" }}
-        >
-          <option value="Teamwear">View Teamwear</option>
-          <option value="Fitnesswear">View Fitnesswear</option>
-          <option value="Sportswear">View Sportswear</option>
-          <option value="Corporatewear">View Corporatewear</option>
-          <option value="Uniform">Uniform</option>
-          <option value="Accessories">Accessories</option>
-        </Form.Select>
+      <div fluid className="flex mb-4 justify-between w-[92%] mx-auto">
+        <div className="md:w-[47%] w-[85%]">
+          <Form.Select
+            aria-label="Default select example"
+            onChange={handleSelectChange}
+            style={{ width: "100%" }}
+          >
+            <option value="Shirt">View Shirt data</option>
+            <option value="Sportswear">View Sportswear data</option>
+            <option value="Promotional">View Promotional Clothing data</option>
+            <option value="Corporatewear">View Corporatewear data</option>
+            <option value="Uniform">View School Uniform data</option>
+            <option value="Accessories">View Accessories data</option>
+          </Form.Select>
         </div>
-      </CContainer>
-  
+        <div className="md:w-[170px]">
+          <input
+            type="text"
+            placeholder="Search product code"
+            className="w-full border-2 rounded-full px-2 py-1"
+            value={searchedProductCode}
+            onChange={(e) => setSearchedProductCode(e.target.value)}
+          />
+        </div>
+      </div>
+
       <div className="flex flex-wrap justify-evenly h-[500px]">
         {data.map((data, index) => (
           <div
             key={index}
-            className="w-[270px] h-[fit-content] pb-2 border-1 border-gray-600 rounded-xl"
+            className="w-[270px] h-[fit-content] pb-2 border-1 border-gray-400 mb-3 rounded-xl"
           >
             <img
               // src={`${BASE_URL}/${data?.image}`}
               src={`${BASE_URL}/${data.image.split(", ")[0]}`}
               alt={data?.title}
-              className="h-[280px] w-[300px] mx-auto rounded-t-xl"
+              className="h-[260px] w-[300px] mx-auto rounded-t-xl"
             />
-            <h5 className="text-center my-3">{data?.title}</h5>
+            <h5 className="text-center text-gray-600 text-[16px] my-3 h-[41px] overflow-hidden line-clamp-2">
+              {data?.title}
+            </h5>
             <div className="flex justify-end pe-3 gap-3">
               <FontAwesomeIcon
                 icon={faPenToSquare}

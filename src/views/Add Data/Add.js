@@ -12,6 +12,8 @@ import BASE_URL from "src/API/Api.js";
 import { CTooltip } from "@coreui/react";
 import { CSpinner } from "@coreui/react";
 // import Button from '@mui/material/Button';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import Tooltip from "@mui/material/Tooltip";
 
 const initialValues = {
@@ -119,6 +121,7 @@ function PostData() {
       formData.append("sleeves_type", sleeveType);
       formData.append("printing_area", printingArea);
       formData.append("printing_charges", printingCharges);
+      formData.append("Product_code", ProductCode);
 
       const selectedSizes = Object.keys(values.checkedSizes).filter(
         (size) => values.checkedSizes[size]
@@ -179,31 +182,18 @@ function PostData() {
 
           setFieldValue("checkedSizes", {
             22: false,
-            23: false,
             24: false,
-            25: false,
             26: false,
-            27: false,
             28: false,
-            29: false,
             30: false,
-            31: false,
             32: false,
-            33: false,
             34: false,
-            35: false,
             36: false,
-            37: false,
             38: false,
-            39: false,
             40: false,
-            41: false,
             42: false,
-            43: false,
             44: false,
-            45: false,
             46: false,
-            47: false,
             48: false,
           });
         } else if (Response.status === 404) {
@@ -276,12 +266,28 @@ function PostData() {
     setDeleteColorCard(true);
   };
 
-  const deleteColor = () => {
-    const updatedColors = values.colors.filter(
-      (color) => color !== selectedColor
-    );
-    setFieldValue("colors", updatedColors);
-    setDeleteColorCard(false);
+  // const deleteColor = () => {
+  //   const updatedColors = values.colors.filter(
+  //     (color) => color !== selectedColor
+  //   );
+  //   setFieldValue("colors", updatedColors);
+  //   setDeleteColorCard(false);
+  // };
+
+
+  const handleDeleteColor = (index) => {
+   // Log the index and current colors for debugging
+  console.log("Deleting color at index:", index);
+  console.log("Current colors:", values.colors);
+
+  // Filter out the color at the clicked index
+  const updatedColors = values.colors.filter((_, i) => i !== index);
+
+  // Log the updated colors array for debugging
+  console.log("Updated colors after deletion:", updatedColors);
+
+  // Update the Formik field value with the new colors array
+  setFieldValue("colors", updatedColors);
   };
 
   const keepIt = () => {
@@ -297,6 +303,26 @@ function PostData() {
   const handlePrintingCharges = (e) => {
     setPrintingCharges(e.target.value);
   };
+  // const handleDeleteImage = (index) => {
+  //   // Filter out the image at the clicked index
+  //   const newImages = images.filter((_, i) => i !== index);
+  //   setImages(newImages);
+  // };
+  const handleDeleteImage = (index) => {
+    // Log the index and current images for debugging
+    console.log("Deleting image at index:", index);
+    console.log("Current images:", images);
+
+    // Filter out the image at the clicked index
+    const newImages = images.filter((_, i) => i !== index);
+
+    // Log the new images array for debugging
+    console.log("New images after deletion:", newImages);
+
+    // Update the state with the new images array
+    setImages(newImages);
+  };
+
   console.log("Images-->", images);
 
   return (
@@ -309,16 +335,16 @@ function PostData() {
             style={{ width: "100%" }}
           >
             {/* <option>Open this select menu</option> */}
-            <option value="Teamwear">Add Teamwear</option>
-            <option value="Fitnesswear">Add Fitnesswear</option>
+            <option value="Shirt">Add Shirt</option>
             <option value="Sportswear">Add Sportswear</option>
+            <option value="Promotional">Add Promotional Clothing</option>
             <option value="Corporatewear">Add Corporatewear</option>
-            <option value="Uniform">Add Uniform</option>
+            <option value="Uniform">Add School Uniform</option>
             <option value="Accessories">Add Accessories</option>
           </Form.Select>
         </div>
       </CContainer>
-
+      
       {loading ? (
         <>
           <div className="flex justify-center items-center h-[100vh] w-[100%]">
@@ -411,15 +437,19 @@ function PostData() {
                       {/* <h5>Added Images:</h5> */}
                       <div className="d-flex flex-wrap w-[90%] mx-auto">
                         {images.map((image, index) => (
-                          <div key={index} className="m-2">
+                          <div
+                            key={index}
+                            className="relative group m-2 border-1 border-dark"
+                          >
+                          <FontAwesomeIcon
+                              icon={faCircleXmark}
+                              className="text-[20px] absolute ms-[90%] mt-[-9%] z-[10] text-red-500 cursor-pointer hover:text-red-600"
+                              onClick={() => handleDeleteImage(index)}
+                            />
                             <img
                               src={URL.createObjectURL(image)}
                               alt={`Image ${index}`}
-                              style={{
-                                maxWidth: "100px",
-                                maxHeight: "100px",
-                                marginRight: "10px",
-                              }}
+                              className="max-w-[100px] max-h-[100px] relative mr-2 rounded-md mx-auto my-auto"
                             />
                           </div>
                         ))}
@@ -462,21 +492,17 @@ function PostData() {
                         <>
                           <div className="block">
                             <div className="relative group">
-                              <div
-                                className="bg-white text-black text-[13px] px-2 py-1 cursor-pointer rounded-md z-10 absolute top-[-23px] left-[48%] transform -translate-x-1/2 hidden group-hover:block"
-                                onClick={deleteColor}
-                              >
-                                Delete?
-                              </div>
-                              <div
-                                className="w-[8px] h-[8px] bg-white mx-[26px] hidden group-hover:block "
-                                style={{ transform: "rotate(45deg)" }}
-                              ></div>
+                              <FontAwesomeIcon
+                                icon={faCircleXmark}
+                                className="text-[20px] absolute ms-[38px] z-1 mt-[-10px] text-red-500 cursor-pointer hover:text-red-600 "
+                                onClick={() => handleDeleteColor(index)}
+                              />
+
                               <div
                                 key={index}
-                                className="relative w-[30px] h-[30px] ms-[15px] my-1"
+                                className="relative w-[30px] h-[30px] ms-[15px] my-1 rounded-md"
                                 style={{ backgroundColor: color }}
-                                onClick={() => handleDeleteCard(color)}
+                                // onClick={() => handleDeleteCard(color)}
                               ></div>
                             </div>
                           </div>
@@ -620,6 +646,27 @@ function PostData() {
                       <option value="Yes">Yes</option>
                       <option value="No">No</option>
                     </Form.Select>
+                  </div>
+                </div>
+                <div className="w-[90%] mx-auto md:text-[17px] border-1 my-3">
+                  <div className="w-[100%] flex justify-start">
+                    <label className="md:my-auto text-start my-3">
+                      Procode code :
+                    </label>
+                  </div>
+                  <div className="w-[100%] justify-start">
+                    <input
+                      type="name"
+                      autoComplete="off"
+                      name="name"
+                      value={values.ProductCode}
+                      onChange={handleChange}
+                      className="w-[100%] rounded-[10px] py-2 px-3 h-[auto]"
+                      placeholder="Enter the name product"
+                    />
+                    {errors.ProductCode && touched.ProductCode ? (
+                      <p className="text-red-700 ms-2">{errors.ProductCode}</p>
+                    ) : null}
                   </div>
                 </div>
               </div>

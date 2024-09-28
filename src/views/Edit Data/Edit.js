@@ -10,6 +10,8 @@ import { useLocation } from "react-router-dom";
 import BASE_URL from "src/API/Api";
 import Form from "react-bootstrap/Form";
 import { CSpinner } from "@coreui/react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 
 const initialValues = {
   name: "",
@@ -88,6 +90,7 @@ function EditPost() {
   const [colors, setColors] = useState(colorArray);
   const [sleeveType, setSleeveType] = useState(data.sleeves_type);
   const [printingArea, setPrintingArea] = useState(data.printing_area);
+  const [productCode, setProductCode] = useState(data.Product_code);
   const [printingCharges, setPrintingCharges] = useState(data.printing_charges);
 
   const [checkedSizes, setCheckedSizes] = useState({
@@ -141,6 +144,7 @@ function EditPost() {
     formData.append("sleeves_type", sleeveType);
     formData.append("printing_area", printingArea);
     formData.append("printing_charges", printingCharges);
+    formData.append("Product_code", productCode);
 
     // Prepare an array to store image names
     const imageNames = [];
@@ -195,6 +199,7 @@ function EditPost() {
         setPrice("");
         setFile("");
         setFabric("");
+        setProductCode("");
         setColors([]);
       } else if (response.status === 404) {
         console.log("404 console", response);
@@ -303,14 +308,32 @@ function EditPost() {
   };
   const handleEditImages = () => {
     setEditImage(true);
-  }
+  };
 
   const settings = {
     dots: true,
     infinite: true,
     speed: 500,
     slidesToShow: 1,
-    slidesToScroll: 1
+    slidesToScroll: 1,
+  };
+  
+  const handleDeleteColor = (index) => {
+    // Assuming colors is a state or Formik field, and setFieldValue is available
+    console.log("Deleting color at index:", index);
+    console.log("Current colors array:", colors);
+
+    // Remove the color at the specified index
+    const updatedColors = colors.filter((_, i) => i !== index);
+
+    // Log the updated colors for debugging
+    console.log("Updated colors array after deletion:", updatedColors);
+
+    // If colors is part of Formik's values:
+    // setFieldValue("colors", updatedColors);
+
+    // If colors is a simple state, use setState like this:
+    setColors(updatedColors);
   };
 
   console.log("colors", colors);
@@ -350,14 +373,13 @@ function EditPost() {
                           onChange={handleImageChange}
                           required
                         />
-                        
                       </div>
                     </div>
                     <div>
                       {images.length > 0 && (
                         <div>
                           {/* <h5>Added Images:</h5> */}
-                          <div className="d-flex flex-wrap w-[90%] mx-auto">
+                          <div className="d-flex flex-wrap w-[90%] mx-auto ">
                             {images.map((image, index) => (
                               <div key={index} className="m-2">
                                 <img
@@ -378,23 +400,31 @@ function EditPost() {
                   </>
                 ) : (
                   <>
-                 
-                    <Carousel>
-                      {data.image.split(", ").map((image, idx) => (
-                        <Carousel.Item
-                          className="custom-carousel"
-                        >
-                          <img
-                            className="d-block w-[200px] mx-auto"
-                            src={`${BASE_URL}/${image}`}
-                            alt={data.title}
-                          />
-                        </Carousel.Item>
-                        
-                      ))}
-                     
-                    </Carousel>
-                    <h1 className="text-end text-[18px] text-blue-900 pe-5" onClick={handleEditImages}>Edit Images?</h1>
+                    <div className="lg:w-[70%] md:w-[80%] w-[90%] mx-auto">
+                      <Carousel
+                        fade
+                        interval={3000}
+                        pause="hover"
+                        indicators={false}
+                      >
+                        {data.image.split(", ").map((image, idx) => (
+                          <Carousel.Item className="custom-carousel">
+                            <img
+                              style={{ objectFit: "cover", maxHeight: "400px" }}
+                              className="d-block w-100"
+                              src={`${BASE_URL}/${image}`}
+                              alt={data.title}
+                            />
+                          </Carousel.Item>
+                        ))}
+                      </Carousel>
+                    </div>
+                    <h1
+                      className="text-end text-[18px] text-blue-900 pe-5 mt-4 w-[100%]"
+                      onClick={handleEditImages}
+                    >
+                      Edit Images?
+                    </h1>
                   </>
                 )}
                 <div className=" w-[90%] mx-auto md:text-[17px] mb-3">
@@ -415,7 +445,6 @@ function EditPost() {
                     />
                   </div>
                 </div>
-
                 <div className=" w-[90%]  md:text-[17px] my-3 mx-auto">
                   <div className="  w-[100%] flex  justify-start">
                     <label className="md:my-auto my-3">Description :</label>
@@ -504,26 +533,23 @@ function EditPost() {
                         <>
                           <div className="block">
                             <div className="relative group">
-                              <div
-                                className="bg-white text-black text-[13px] px-2 py-1 cursor-pointer rounded-md z-10 absolute top-[-23px] left-[48%] transform -translate-x-1/2 hidden group-hover:block"
-                                onClick={deleteColor}
-                              >
-                                Delete?
-                              </div>
-                              <div
-                                className="w-[8px] h-[8px] bg-white mx-[26px] hidden group-hover:block "
-                                style={{ transform: "rotate(45deg)" }}
-                              ></div>
+                              <FontAwesomeIcon
+                                icon={faCircleXmark}
+                                className="text-[20px] absolute ms-[23px] z-1 mt-[-12px] text-red-500 cursor-pointer hover:text-red-600"
+                                onClick={() => handleDeleteColor(index)}
+                              />
                               <div
                                 key={index}
                                 className="w-[30px] h-[30px] rounded-md"
                                 style={{ backgroundColor: currentColor }}
                                 onClick={() => handleDeleteCard(currentColor)}
                               ></div>
+                              <h1 className="text-[11px]">{currentColor}</h1>
                             </div>
                           </div>
                         </>
                       ))}
+
                       {openColorCard ? (
                         <>
                           <div className="absolute ms-[3%] lg:mt-[-20%] mt-[-22%] z-30 w-[260px]">
@@ -566,7 +592,24 @@ function EditPost() {
                     />
                   </div>
                 </div>
-
+                <div className=" w-[90%] mx-auto md:text-[17px] mb-3">
+                  <div className="w-[100%] flex  justify-start">
+                    <label className="md:my-auto md:text-end text-start my-3">
+                      Product Code :
+                    </label>
+                  </div>
+                  <div className=" w-[100%] justify-start md:ps-2">
+                    <input
+                      type="text"
+                      autoComplete="off"
+                      name="productCode"
+                      value={productCode}
+                      onChange={(e) => setProductCode(e.target.value)}
+                      className=" w-[100%] rounded-[10px] py-2 px-3 h-[auto]"
+                      placeholder="Enter the name product"
+                    />
+                  </div>
+                </div>
                 <div className=" w-[90%] mx-auto  md:text-[17px] my-3">
                   <div className="  w-[100%] flex  justify-start ">
                     <label className="md:my-auto my-3">Price :</label>

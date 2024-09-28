@@ -37,6 +37,7 @@
     "@mui/icons-material": "^5.16.1",
     "@mui/material": "^5.16.1",
     "@mui/styled-engine-sc": "^6.0.0-alpha.18",
+    "@tailwindcss/line-clamp": "^0.4.4",
     "bootstrap": "^5.3.3",
     "boxicons": "^2.1.4",
     "chart.js": "^3.9.1",
