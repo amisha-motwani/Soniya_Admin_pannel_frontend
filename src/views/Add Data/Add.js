@@ -303,6 +303,7 @@ function PostData() {
   const handlePrintingCharges = (e) => {
     setPrintingCharges(e.target.value);
   };
+
   // const handleDeleteImage = (index) => {
   //   // Filter out the image at the clicked index
   //   const newImages = images.filter((_, i) => i !== index);
@@ -322,7 +323,6 @@ function PostData() {
     // Update the state with the new images array
     setImages(newImages);
   };
-
   console.log("Images-->", images);
 
   return (
@@ -334,7 +334,7 @@ function PostData() {
             onChange={handleSelectChange}
             style={{ width: "100%" }}
           >
-            {/* <option>Open this select menu</option> */}
+           
             <option value="Shirt">Add Shirt</option>
             <option value="Sportswear">Add Sportswear</option>
             <option value="Promotional">Add Promotional Clothing</option>
@@ -417,6 +417,7 @@ function PostData() {
 
                 <div className="w-[90%] mx-auto md:text-[17px] mb-3 mt-4 pt-3">
                   <div className="mb-2 ">
+
                     <Form.Label className="mx-2">Upload Images</Form.Label>
                     <input
                       type="file"
@@ -450,6 +451,7 @@ function PostData() {
                               src={URL.createObjectURL(image)}
                               alt={`Image ${index}`}
                               className="max-w-[100px] max-h-[100px] relative mr-2 rounded-md mx-auto my-auto"
+
                             />
                           </div>
                         ))}
@@ -503,6 +505,7 @@ function PostData() {
                                 className="relative w-[30px] h-[30px] ms-[15px] my-1 rounded-md"
                                 style={{ backgroundColor: color }}
                                 // onClick={() => handleDeleteCard(color)}
+
                               ></div>
                             </div>
                           </div>

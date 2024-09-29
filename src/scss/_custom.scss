@@ -1,5 +1,41 @@
 // Here you can add other styles
 
+.loginImage{
+    height: 400px;
+}
+@media (max-width: 575px) {
+    .loginImage {
+      height: 330px;
+    }
+}
+@media (max-width: 415px) {
+    .loginImage {
+      height: 230px;
+    }
+}
+@media (max-width: 385px) {
+    .loginImage {
+      height: 190px;
+    }
+}
+
+
+
+// ------------------------Edit page ------------------------
+.carousel-control-next-icon{
+  background-color: #000000;
+  color: white;
+  border-radius: 50%;
+  padding: 5px;
+}
+.carousel-control-prev-icon{
+  background-color: black;
+  color: white;
+  border-radius: 50%;
+  padding: 5px;
+}
+
+
 .loginImage {
   height: 400px;
 }

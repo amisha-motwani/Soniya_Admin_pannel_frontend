@@ -9,9 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useLocation } from "react-router-dom";
 import BASE_URL from "src/API/Api";
 import Form from "react-bootstrap/Form";
-import { CSpinner } from "@coreui/react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
+import {CSpinner,} from "@coreui/react";
 
 const initialValues = {
   name: "",
@@ -144,26 +142,6 @@ function EditPost() {
     formData.append("sleeves_type", sleeveType);
     formData.append("printing_area", printingArea);
     formData.append("printing_charges", printingCharges);
-    formData.append("Product_code", productCode);
-
-    // Prepare an array to store image names
-    const imageNames = [];
-
-    // Iterate over images array
-    images.forEach((image, index) => {
-      // Construct image name in the format: lastModified + name
-      const imageName = `${image.lastModified}${image.name}`;
-      // Append image to formData with consistent key "image"
-      formData.append(`image`, image, imageName); // Use "image" as the key
-      // Push the constructed imageName to imageNames array
-      imageNames.push(imageName);
-    });
-
-    // Join image names with comma "," to form a single string
-    const joinedImageNames = imageNames.join(" , ");
-
-    // Append the joined image names as a single string to formData
-    formData.append("image", joinedImageNames);
 
     const selectedSizes = Object.keys(checkedSizes).filter(
       (size) => checkedSizes[size]
@@ -306,35 +284,6 @@ function EditPost() {
   const handlePrintingCharges = (e) => {
     setPrintingCharges(e.target.value);
   };
-  const handleEditImages = () => {
-    setEditImage(true);
-  };
-
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-  };
-  
-  const handleDeleteColor = (index) => {
-    // Assuming colors is a state or Formik field, and setFieldValue is available
-    console.log("Deleting color at index:", index);
-    console.log("Current colors array:", colors);
-
-    // Remove the color at the specified index
-    const updatedColors = colors.filter((_, i) => i !== index);
-
-    // Log the updated colors for debugging
-    console.log("Updated colors array after deletion:", updatedColors);
-
-    // If colors is part of Formik's values:
-    // setFieldValue("colors", updatedColors);
-
-    // If colors is a simple state, use setState like this:
-    setColors(updatedColors);
-  };
 
   console.log("colors", colors);
 
@@ -360,73 +309,6 @@ function EditPost() {
                 <b>Edit Product</b>
               </h1>
               <div className="w-[100%] h-[fit-content] pt-4">
-                {editImage ? (
-                  <>
-                    <div className="w-[90%] mx-auto md:text-[17px] my-3">
-                      <div className="mb-2">
-                        <Form.Label className="mx-2">Upload Images</Form.Label>
-                        <input
-                          type="file"
-                          name="images"
-                          accept="image/*"
-                          multiple
-                          onChange={handleImageChange}
-                          required
-                        />
-                      </div>
-                    </div>
-                    <div>
-                      {images.length > 0 && (
-                        <div>
-                          {/* <h5>Added Images:</h5> */}
-                          <div className="d-flex flex-wrap w-[90%] mx-auto ">
-                            {images.map((image, index) => (
-                              <div key={index} className="m-2">
-                                <img
-                                  src={URL.createObjectURL(image)}
-                                  alt={`Image ${index}`}
-                                  style={{
-                                    maxWidth: "100px",
-                                    maxHeight: "100px",
-                                    marginRight: "10px",
-                                  }}
-                                />
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <div className="lg:w-[70%] md:w-[80%] w-[90%] mx-auto">
-                      <Carousel
-                        fade
-                        interval={3000}
-                        pause="hover"
-                        indicators={false}
-                      >
-                        {data.image.split(", ").map((image, idx) => (
-                          <Carousel.Item className="custom-carousel">
-                            <img
-                              style={{ objectFit: "cover", maxHeight: "400px" }}
-                              className="d-block w-100"
-                              src={`${BASE_URL}/${image}`}
-                              alt={data.title}
-                            />
-                          </Carousel.Item>
-                        ))}
-                      </Carousel>
-                    </div>
-                    <h1
-                      className="text-end text-[18px] text-blue-900 pe-5 mt-4 w-[100%]"
-                      onClick={handleEditImages}
-                    >
-                      Edit Images?
-                    </h1>
-                  </>
-                )}
                 <div className=" w-[90%] mx-auto md:text-[17px] mb-3">
                   <div className="w-[100%] flex  justify-start">
                     <label className="md:my-auto md:text-end text-start my-3">
@@ -529,25 +411,71 @@ function EditPost() {
                       />
                     </div>
                     <div className="flex gap-3 flex-wrap w-[90%]">
-                      {colors?.map((currentColor, index) => (
+                      {confirmColor ? (
                         <>
-                          <div className="block">
-                            <div className="relative group">
-                              <FontAwesomeIcon
-                                icon={faCircleXmark}
-                                className="text-[20px] absolute ms-[23px] z-1 mt-[-12px] text-red-500 cursor-pointer hover:text-red-600"
-                                onClick={() => handleDeleteColor(index)}
-                              />
+                          <CAlert>
+                            <div className="absolute ms-[250px] lg:mt-[-190px] mt-[-220px] z-30 w-[260px] px-2 py-3 bg-slate-400 text-white rounded-lg">
+                              <div className="">
+                                Do you want to add this color?
+                              </div>
                               <div
-                                key={index}
-                                className="w-[30px] h-[30px] rounded-md"
-                                style={{ backgroundColor: currentColor }}
-                                onClick={() => handleDeleteCard(currentColor)}
+                                className="w-[90%] h-[40px] mx-auto my-3"
+                                style={{ background: selectedColor }}
                               ></div>
-                              <h1 className="text-[11px]">{currentColor}</h1>
+                              <div className="flex justify-between px-2 my-2">
+                                <button
+                                  onClick={addColor}
+                                  className="w-[fit-content] h-[fit-content] rounded-full bg-green-500 px-2 py-1"
+                                >
+                                  Yes
+                                </button>
+                                <button
+                                  onClick={removeColor}
+                                  className="w-[fit-content] h-[fit-content] rounded-full bg-red-500 px-2 py-1"
+                                >
+                                  close
+                                </button>
+                              </div>
                             </div>
-                          </div>
+                          </CAlert>
                         </>
+                      ) : (
+                        <></>
+                      )}
+                      {deleteColorCard ? (
+                        <>
+                          <CAlert>
+                            <div className="absolute ms-[-10px] mt-[-250px] z-30 w-[260px] px-2 py-3 bg-slate-400 text-white rounded-lg">
+                              <div className="">
+                                Do you want to remove this color?
+                              </div>
+                              <div className="flex justify-between px-2 my-2">
+                                <button
+                                  onClick={keepIt}
+                                  className="w-[fit-content] h-[fit-content] rounded-full bg-green-500 px-2 py-1"
+                                >
+                                  Keep it
+                                </button>
+                                <button
+                                  onClick={deleteColor}
+                                  className="w-[fit-content] h-[fit-content] rounded-full bg-red-500 px-2 py-1"
+                                >
+                                  Delete it
+                                </button>
+                              </div>
+                            </div>
+                          </CAlert>
+                        </>
+                      ) : (
+                        <></>
+                      )}
+                      {colors?.map((currentColor, index) => (
+                        <div
+                          key={index}
+                          className="w-[30px] h-[30px] rounded-md"
+                          style={{ backgroundColor: currentColor }}
+                          onClick={() => handleDeleteCard(currentColor)}
+                        ></div>
                       ))}
 
                       {openColorCard ? (
