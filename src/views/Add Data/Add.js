@@ -8,7 +8,7 @@ import { SketchPicker } from "react-color";
 import colorWheel from "../../colorWheel.png";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import BASE_URL from "src/API/Api.js";
+import BASE_URL from "../../API/Api.js";
 import { CTooltip } from "@coreui/react";
 import { CSpinner } from "@coreui/react";
 // import Button from '@mui/material/Button';
@@ -23,6 +23,7 @@ const initialValues = {
   description: "",
   file: "",
   fabric: "",
+  Product_code:"",
   colors: [],
   Polo_collar: false,
   Round_neck: false,
@@ -54,7 +55,7 @@ const initialValues = {
 
 function PostData() {
   const [images, setImages] = useState([]);
-  const [selectedValue, setSelectedValue] = useState("Teamwear");
+  const [selectedValue, setSelectedValue] = useState("Shirts");
   const [sleeveType, setSleeveType] = useState("");
   const [printingArea, setPrintingArea] = useState("");
   const [printingCharges, setPrintingCharges] = useState("");
@@ -67,7 +68,7 @@ function PostData() {
   // ----------------Add logic ---------------------------
   const secretKey = sessionStorage.getItem("secreteKey");
   const key = localStorage.getItem("secretKey");
-  console.log("leyy", secretKey);
+  console.log("keyy", secretKey);
 
   const [image, setImage] = useState(null);
   const [apiResponse, setApiResponse] = useState();
@@ -121,7 +122,9 @@ function PostData() {
       formData.append("sleeves_type", sleeveType);
       formData.append("printing_area", printingArea);
       formData.append("printing_charges", printingCharges);
-      formData.append("Product_code", ProductCode);
+      // formData.append("Product_code", ProductCode);
+      formData.append("Product_code", values.Product_code);
+
 
       const selectedSizes = Object.keys(values.checkedSizes).filter(
         (size) => values.checkedSizes[size]
@@ -150,23 +153,28 @@ function PostData() {
         };
 
         const Response = await fetch(
+          // "http://localhost:5000/api/notes/add/Product",
           `${BASE_URL}/api/notes/add/Product`,
           requestOptions
         );
 
         if (Response.status === 400) {
           const resp = await Response.json();
+          console.log("response 400", resp);
           toast.error(resp.errors[0].msg);
         } else if (Response.status === 401) {
           const resp = await Response.json();
-          console.log("error", resp.error);
+          console.log("response 401", resp.error);
           toast.error(resp.error);
         } else if (Response.status === 500) {
           const resp = await Response.text();
+          console.log("response 500", resp);
+
           toast.error(resp);
         } else if (Response.ok) {
           const data = await Response.json();
           setApiResponse(data);
+          console.log("data-->", data)
           toast.success("Successfully Posted");
           resetForm();
           setFieldValue("colors", []);
@@ -198,7 +206,8 @@ function PostData() {
           });
         } else if (Response.status === 404) {
           console.log("404 console", Response);
-        } else if (Response.status === 500) {
+        } else if (Response.status === 500)
+           {
           console.log("500 console");
         }
       } catch (error) {
@@ -226,7 +235,6 @@ function PostData() {
     setSelectedColor(newColor.hex);
     setConfirmColor(true);
   };
-
   const addColor = () => {
     const updatedColors = [...values.colors, selectedColor];
     setFieldValue("colors", updatedColors);
@@ -266,15 +274,6 @@ function PostData() {
     setDeleteColorCard(true);
   };
 
-  // const deleteColor = () => {
-  //   const updatedColors = values.colors.filter(
-  //     (color) => color !== selectedColor
-  //   );
-  //   setFieldValue("colors", updatedColors);
-  //   setDeleteColorCard(false);
-  // };
-
-
   const handleDeleteColor = (index) => {
    // Log the index and current colors for debugging
   console.log("Deleting color at index:", index);
@@ -304,11 +303,6 @@ function PostData() {
     setPrintingCharges(e.target.value);
   };
 
-  // const handleDeleteImage = (index) => {
-  //   // Filter out the image at the clicked index
-  //   const newImages = images.filter((_, i) => i !== index);
-  //   setImages(newImages);
-  // };
   const handleDeleteImage = (index) => {
     // Log the index and current images for debugging
     console.log("Deleting image at index:", index);
@@ -661,14 +655,14 @@ function PostData() {
                     <input
                       type="name"
                       autoComplete="off"
-                      name="name"
-                      value={values.ProductCode}
+                      name="Product_code"
+                      value={values.Product_code}
                       onChange={handleChange}
                       className="w-[100%] rounded-[10px] py-2 px-3 h-[auto]"
                       placeholder="Enter the name product"
                     />
-                    {errors.ProductCode && touched.ProductCode ? (
-                      <p className="text-red-700 ms-2">{errors.ProductCode}</p>
+                    {errors.Product_code && touched.Product_code ? (
+                      <p className="text-red-700 ms-2">{errors.Product_code}</p>
                     ) : null}
                   </div>
                 </div>
