@@ -7,7 +7,7 @@ import { Carousel } from "react-bootstrap";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useLocation } from "react-router-dom";
-import BASE_URL from "src/API/Api";
+import BASE_URL from "../../API/Api.js";
 import Form from "react-bootstrap/Form";
 import {CSpinner,} from "@coreui/react";
 

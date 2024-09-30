@@ -15,7 +15,7 @@ function View() {
   const key = localStorage.getItem("secretKey");
   console.log("leyy", secretKey);
 
-  const [selectedValue, setSelectedValue] = useState("Teamwear");
+  const [selectedValue, setSelectedValue] = useState("Shirt");
   const [searchedProductCode, setSearchedProductCode] = useState("");
 
   const handleSelectChange = (e) => {
@@ -71,7 +71,7 @@ function View() {
       };
 
       const response = await fetch(
-        `${BASE_URL}/api/notes/delete/${selectedValue}/${_id}`,
+        `${BASE_URL}/api/notes/delete/Product/${_id}`,
         {
           method: "DELETE",
           headers: headers,
@@ -116,8 +116,8 @@ function View() {
 
   return (
     <>
-      <div fluid className="flex mb-4 justify-between w-[92%] mx-auto">
-        <div className="md:w-[47%] w-[85%]">
+      <div fluid className="md:flex block mb-2 justify-between w-[92%] mx-auto">
+        <div className="md:w-[50%] w-[85%] md:my-1 my-2">
           <Form.Select
             aria-label="Default select example"
             onChange={handleSelectChange}
@@ -131,11 +131,11 @@ function View() {
             <option value="Accessories">View Accessories data</option>
           </Form.Select>
         </div>
-        <div className="md:w-[170px]">
+        <div className="md:w-[35%] w-[85%] md:my-1 my-2">
           <input
             type="text"
             placeholder="Search product code"
-            className="w-full border-2 rounded-full px-2 py-1"
+            className="w-full border-2 rounded-full px-3 py-[7px]"
             value={searchedProductCode}
             onChange={(e) => setSearchedProductCode(e.target.value)}
           />
