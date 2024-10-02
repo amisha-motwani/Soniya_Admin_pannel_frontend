@@ -1117,7 +1117,7 @@ function EditPost() {
                               >
                                 <FontAwesomeIcon
                                   icon={faCircleXmark}
-                                  className="text-[20px] absolute ms-[90%] mt-[-9%] z-[10] text-red-500 cursor-pointer hover:text-red-600"
+                                  className="text-[20px] absolute ms-[80%] mt-[-9%] z-[10] text-red-500 cursor-pointer hover:text-red-600"
                                   onClick={() => handleDeleteImage(index)}
                                 />
                                 <img
@@ -1270,7 +1270,7 @@ function EditPost() {
                         <div key={index} className="relative group">
                           <FontAwesomeIcon
                             icon={faCircleXmark}
-                            className="text-[20px] absolute ms-[38px] z-1 mt-[-10px] text-red-500 cursor-pointer hover:text-red-600"
+                            className="text-[20px] absolute ms-[18px] z-10 mt-[-12px] text-red-500 cursor-pointer hover:text-red-600"
                             onClick={() => handleDeleteColor(index)}
                           />
                           <div
@@ -1278,6 +1278,7 @@ function EditPost() {
                             style={{ backgroundColor: currentColor }}
                             onClick={() => handleDeleteCard(currentColor)} // Make sure you have the handleDeleteCard function
                           ></div>
+                          <h1 className="text-sm mt-1 text-center">{currentColor}</h1>
                         </div>
                       ))}
 
