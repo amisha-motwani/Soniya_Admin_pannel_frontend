@@ -1140,29 +1140,25 @@ function EditPost() {
                           <Carousel.Item key={index}>
                             <img
                               className="d-block w-100"
-                              // src={image}
-                              src={`${BASE_URL}/${image}`}
+                              // src={image}y7
+                              src={image}
                               alt={`Slide ${index + 1}`}
                             />
-                            {/* <Carousel.Casption>
-                          <h3>Slide {index + 1}</h3>
-                          <p>Image {index + 1} description goes here.</p>
-                        </Carousel.Casption> */}
                           </Carousel.Item>
                         ))}
                       </Carousel>
                     </div>
 
-                    <h1
+                    {/* <h1
                       className="text-blue-900 text-[17px] text-center underline my-3"
                       onClick={() => setEditImage(true)}
                     >
                       Edit Images?
-                    </h1>
+                    </h1> */}
                   </>
                 )}
 
-                <div className=" w-[90%] mx-auto md:text-[17px] mb-3">
+                <div className="w-[90%] mx-auto md:text-[17px] mb-3">
                   <div className="w-[100%] flex  justify-start">
                     <label className="md:my-auto md:text-end text-start my-3">
                       Name of the product :

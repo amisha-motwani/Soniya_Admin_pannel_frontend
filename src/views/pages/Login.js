@@ -70,6 +70,7 @@ const Login = () => {
     }
   };
 
+  
   const handleForget = () => {
     navigate("/Forget");
   };

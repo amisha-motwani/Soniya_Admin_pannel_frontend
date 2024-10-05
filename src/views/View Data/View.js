@@ -149,6 +149,36 @@ function View() {
             className="w-[270px] h-[fit-content] pb-2 border-1 border-gray-400 mb-3 rounded-xl"
           >
             <img
+              src={data.image.split(", ")[0]}
+              alt={`${data?.title} image`}
+              className="h-[260px] w-[300px] mx-auto rounded-t-xl mb-2"
+            />
+
+            <h5 className="text-center text-gray-600 text-[16px] my-3 h-[41px] overflow-hidden line-clamp-2">
+              {data?.title}
+            </h5>
+
+            <div className="flex justify-end pe-3 gap-3">
+              <FontAwesomeIcon
+                icon={faPenToSquare}
+                onClick={() => handleEdit(data)}
+                className="text-red-600 text-[19px] cursor-pointer"
+              />
+              <FontAwesomeIcon
+                icon={faTrash}
+                onClick={() => handleDelete(data?._id)}
+                className="text-red-600 text-[19px] cursor-pointer"
+              />
+            </div>
+          </div>
+        ))}
+
+        {/* {data.map((data, index) => (
+          <div
+            key={index}
+            className="w-[270px] h-[fit-content] pb-2 border-1 border-gray-400 mb-3 rounded-xl"
+          >
+            <img
               // src={`${BASE_URL}/${data?.image}`}
               src={`${BASE_URL}/${data.image.split(", ")[0]}`}
               alt={data?.title}
@@ -170,7 +200,7 @@ function View() {
               />
             </div>
           </div>
-        ))}
+        ))} */}
       </div>
     </>
   );
