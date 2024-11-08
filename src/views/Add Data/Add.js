@@ -55,7 +55,7 @@ const initialValues = {
 
 function PostData() {
   const [images, setImages] = useState([]);
-  const [selectedValue, setSelectedValue] = useState("Shirt");
+  const [selectedValue, setSelectedValue] = useState("TShirt");
   const [sleeveType, setSleeveType] = useState("");
   const [printingArea, setPrintingArea] = useState("");
   const [printingCharges, setPrintingCharges] = useState("");
