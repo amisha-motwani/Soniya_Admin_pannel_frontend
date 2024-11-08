@@ -150,16 +150,10 @@ function View() {
             key={index}
             className="w-[270px] h-[fit-content] pb-2 border-1 border-gray-400 mb-3 rounded-xl"
           >
-            {/* <img
+            <img
               src={data.image.split(", ")[0]}
               alt={`${data?.title} image`}
               className="h-[260px] w-[300px] mx-auto rounded-t-xl mb-2"
-            /> */}
-            <img
-              // src={`${BASE_URL}/${data?.image}`}
-              src={`${BASE_URL}/${data.image.split(", ")[0]}`}
-              alt={data?.title}
-              className="h-[260px] w-[300px] mx-auto rounded-t-xl"
             />
 
             <h5 className="text-center text-gray-600 text-[16px] my-3 h-[41px] overflow-hidden line-clamp-2">
