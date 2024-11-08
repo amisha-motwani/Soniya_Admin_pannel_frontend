@@ -442,6 +442,7 @@ function PostData() {
                               className="max-w-[100px] max-h-[100px] relative mr-2 rounded-md mx-auto my-auto"
 
                             />
+                            
                           </div>
                         ))}
                       </div>
