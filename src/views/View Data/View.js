@@ -15,7 +15,7 @@ function View() {
   const key = localStorage.getItem("secretKey");
   console.log("leyy", secretKey);
 
-  const [selectedValue, setSelectedValue] = useState("Shirt");
+  const [selectedValue, setSelectedValue] = useState("TShirt");
   const [searchedProductCode, setSearchedProductCode] = useState("");
 
   const handleSelectChange = (e) => {
@@ -123,12 +123,14 @@ function View() {
             onChange={handleSelectChange}
             style={{ width: "100%" }}
           >
-            <option value="Shirt">View Shirt data</option>
+            <option value="TShirt">View T-Shirt data</option>
             <option value="Sportswear">View Sportswear data</option>
             <option value="Promotional">View Promotional Clothing data</option>
             <option value="Corporatewear">View Corporatewear data</option>
             <option value="Uniform">View School Uniform data</option>
             <option value="Accessories">View Accessories data</option>
+            <option value="Eventwear">View Eventwear data</option>
+
           </Form.Select>
         </div>
         <div className="md:w-[35%] w-[85%] md:my-1 my-2">

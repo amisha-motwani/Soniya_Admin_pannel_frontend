@@ -328,13 +328,14 @@ function PostData() {
             onChange={handleSelectChange}
             style={{ width: "100%" }}
           >
-           
-            <option value="Shirt">Add Shirt</option>
+
+            <option value="TShirt">Add T-Shirt </option>
             <option value="Sportswear">Add Sportswear</option>
             <option value="Promotional">Add Promotional Clothing</option>
             <option value="Corporatewear">Add Corporatewear</option>
             <option value="Uniform">Add School Uniform</option>
             <option value="Accessories">Add Accessories</option>
+            <option value="Eventwear">Add Eventwear</option>
           </Form.Select>
         </div>
       </CContainer>
@@ -387,13 +388,7 @@ function PostData() {
                     </label>
                   </div>
                   <div className=" w-[100%] justify-start ">
-                    {/* <input
-                      name="description"
-                      value={values.description}
-                      onChange={handleChange}
-                      className="w-[100%] rounded-[10px] border py-2 px-3 description_input"
-                      placeholder="Enter the description"
-                    /> */}
+                   
                     <textarea
                       name="description"
                       value={values.description}

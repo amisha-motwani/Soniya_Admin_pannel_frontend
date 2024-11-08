@@ -3,6 +3,7 @@ import Login from "./views/pages/Login";
 import Add from "./views/Add Data/Add";
 import View from "./views/View Data/View";
 import Edit from "./views/Edit Data/Edit";
+import DesignYourOwn from "./views/Design/DesignYourOwn";
 
 
 const Testing = React.lazy(
@@ -89,6 +90,7 @@ const routes = [
   { path: '/Add', name: 'Add', element: Add},
   { path: '/View', View: 'View', element:  View},
   { path: '/Edit/:value', View: 'Edit', element:Edit},
+  { path: '/DesignYourOwn', View: 'DesignYourOwn', element: DesignYourOwn},
   
   // { path: '/dashboard', name: 'Dashboard', element: Dashboard },
   // { path: '/theme', name: 'Theme', element: Colors, exact: true },

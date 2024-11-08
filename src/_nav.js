@@ -50,6 +50,12 @@ const _nav = [
     to: "/View",
     icon: <RemoveRedEyeSharpIcon className="nav-icon" style={iconStyle} />
   },
+  {
+    component: CNavItem,
+    name: "Design your own",
+    to: "/DesignYourOwn",
+    icon: <RemoveRedEyeSharpIcon className="nav-icon" style={iconStyle} />
+  },
 
   // {
   //   component: CNavTitle,
