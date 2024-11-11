@@ -644,7 +644,7 @@ function PostData() {
                 <div className="w-[90%] mx-auto md:text-[17px] border-1 my-3">
                   <div className="w-[100%] flex justify-start">
                     <label className="md:my-auto text-start my-3">
-                      Procode code :
+                      Product code :
                     </label>
                   </div>
                   <div className="w-[100%] justify-start">
