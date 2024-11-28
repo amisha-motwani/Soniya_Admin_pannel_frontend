@@ -103,13 +103,13 @@ function View() {
         className="flex justify-center items-center w-[100%] h-[100vh]"
         style={{ overflowY: "hidden !important" }}
       >
-        <Spinner
+        <Spinnery
           animation="border"
           role="status"
           className="my-auto mx-auto text-gray-400"
         >
           <span className="sr-only">Loading...</span>
-        </Spinner>
+        </Spinnery>
       </div>
     );
   }
@@ -118,20 +118,7 @@ function View() {
     <>
       <div fluid className="md:flex block mb-2 justify-between w-[92%] mx-auto">
         <div className="md:w-[50%] w-[85%] md:my-1 my-2">
-          <Form.Select
-            aria-label="Default select example"
-            onChange={handleSelectChange}
-            style={{ width: "100%" }}
-          >
-            <option value="TShirt">View T-Shirt data</option>
-            <option value="Sportswear">View Sportswear data</option>
-            <option value="Promotional">View Promotional Clothing data</option>
-            <option value="Corporatewear">View Corporatewear data</option>
-            <option value="Uniform">View School Uniform data</option>
-            <option value="Accessories">View Accessories data</option>
-            <option value="Eventwear">View Eventwear data</option>
-
-          </Form.Select>
+         s
         </div>
         <div className="md:w-[35%] w-[85%] md:my-1 my-2">
           <input
@@ -174,35 +161,6 @@ function View() {
             </div>
           </div>
         ))}
-
-        {/* {data.map((data, index) => (
-          <div
-            key={index}
-            className="w-[270px] h-[fit-content] pb-2 border-1 border-gray-400 mb-3 rounded-xl"
-          >
-            <img
-              // src={`${BASE_URL}/${data?.image}`}
-              src={`${BASE_URL}/${data.image.split(", ")[0]}`}
-              alt={data?.title}
-              className="h-[260px] w-[300px] mx-auto rounded-t-xl"
-            />
-            <h5 className="text-center text-gray-600 text-[16px] my-3 h-[41px] overflow-hidden line-clamp-2">
-              {data?.title}
-            </h5>
-            <div className="flex justify-end pe-3 gap-3">
-              <FontAwesomeIcon
-                icon={faPenToSquare}
-                onClick={() => handleEdit(data)}
-                className="text-red-600 text-[19px] cursor-pointer"
-              />
-              <FontAwesomeIcon
-                icon={faTrash}
-                onClick={() => handleDelete(data?._id)}
-                className="text-red-600 text-[19px] cursor-pointer"
-              />
-            </div>
-          </div>
-        ))} */}
       </div>
     </>
   );

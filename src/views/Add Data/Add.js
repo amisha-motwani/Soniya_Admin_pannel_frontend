@@ -330,12 +330,23 @@ function PostData() {
           >
 
             <option value="TShirt">Add T-Shirt </option>
-            <option value="Sportswear">Add Sportswear</option>
-            <option value="Promotional">Add Promotional Clothing</option>
-            <option value="Corporatewear">Add Corporatewear</option>
+            <option value="WorkTShirt">Add Work T-Shirt </option>
+            <option value="PoloTShirt">Add Polo T-Shirt </option>
+            <option value="PromotionalTShirt">Add Promotional T-Shirt </option>
+            <option value="RunningTShirt">Add Running T-Shirt </option>
+            <option value="SandowsTShirt">Add Sandows T-Shirt </option>
+            <option value="KabbadiShirt">Add Kabbadi T-Shirt </option>
+          
+            <option value="Hoodies">Add Hoodies</option>
+            <option value="Tracksuits">Add Tracksuits</option>
+            <option value="Sweatshirts">Add Sweatshirts</option>
+            <option value="Jackets">Add Jackets</option>
+            <option value="Bottoms">Add Bottoms</option>
             <option value="Uniform">Add School Uniform</option>
+            <option value="Jersey">Add Jersey</option>
+            <option value="CricketKit">Add Cricket Kit</option>
             <option value="Accessories">Add Accessories</option>
-            <option value="Eventwear">Add Eventwear</option>
+
           </Form.Select>
         </div>
       </CContainer>
