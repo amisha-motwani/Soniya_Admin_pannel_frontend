@@ -23,7 +23,8 @@ const initialValues = {
   description: "",
   file: "",
   fabric: "",
-  Product_code:"",
+  Product_code: "",
+  Product_Quantity: "",
   colors: [],
   Polo_collar: false,
   Round_neck: false,
@@ -124,7 +125,7 @@ function PostData() {
       formData.append("printing_charges", printingCharges);
       // formData.append("Product_code", ProductCode);
       formData.append("Product_code", values.Product_code);
-
+      formData.append("Product_Quantity", values.Product_Quantity);
 
       const selectedSizes = Object.keys(values.checkedSizes).filter(
         (size) => values.checkedSizes[size]
@@ -174,7 +175,7 @@ function PostData() {
         } else if (Response.ok) {
           const data = await Response.json();
           setApiResponse(data);
-          console.log("data-->", data)
+          console.log("data-->", data);
           toast.success("Successfully Posted");
           resetForm();
           setFieldValue("colors", []);
@@ -206,8 +207,7 @@ function PostData() {
           });
         } else if (Response.status === 404) {
           console.log("404 console", Response);
-        } else if (Response.status === 500)
-           {
+        } else if (Response.status === 500) {
           console.log("500 console");
         }
       } catch (error) {
@@ -275,18 +275,18 @@ function PostData() {
   };
 
   const handleDeleteColor = (index) => {
-   // Log the index and current colors for debugging
-  console.log("Deleting color at index:", index);
-  console.log("Current colors:", values.colors);
+    // Log the index and current colors for debugging
+    console.log("Deleting color at index:", index);
+    console.log("Current colors:", values.colors);
 
-  // Filter out the color at the clicked index
-  const updatedColors = values.colors.filter((_, i) => i !== index);
+    // Filter out the color at the clicked index
+    const updatedColors = values.colors.filter((_, i) => i !== index);
 
-  // Log the updated colors array for debugging
-  console.log("Updated colors after deletion:", updatedColors);
+    // Log the updated colors array for debugging
+    console.log("Updated colors after deletion:", updatedColors);
 
-  // Update the Formik field value with the new colors array
-  setFieldValue("colors", updatedColors);
+    // Update the Formik field value with the new colors array
+    setFieldValue("colors", updatedColors);
   };
 
   const keepIt = () => {
@@ -328,7 +328,6 @@ function PostData() {
             onChange={handleSelectChange}
             style={{ width: "100%" }}
           >
-
             <option value="TShirt">Add T-Shirt </option>
             <option value="WorkTShirt">Add Work T-Shirt </option>
             <option value="PoloTShirt">Add Polo T-Shirt </option>
@@ -336,7 +335,7 @@ function PostData() {
             <option value="RunningTShirt">Add Running T-Shirt </option>
             <option value="SandowsTShirt">Add Sandows T-Shirt </option>
             <option value="KabbadiShirt">Add Kabbadi T-Shirt </option>
-          
+
             <option value="Hoodies">Add Hoodies</option>
             <option value="Tracksuits">Add Tracksuits</option>
             <option value="Sweatshirts">Add Sweatshirts</option>
@@ -346,11 +345,10 @@ function PostData() {
             <option value="Jersey">Add Jersey</option>
             <option value="CricketKit">Add Cricket Kit</option>
             <option value="Accessories">Add Accessories</option>
-
           </Form.Select>
         </div>
       </CContainer>
-      
+
       {loading ? (
         <>
           <div className="flex justify-center items-center h-[100vh] w-[100%]">
@@ -367,7 +365,7 @@ function PostData() {
               onSubmit={handleSubmit}
               className="lg:w-[80%] md:w-[90%] w-[97%] mx-auto h-[fit-content] my-auto bg-[#deebf5] rounded-[13px] shadow-2xl text-black "
             >
-              <h1 className="sm:text-[22px] text-[17px] py-3 px-auto border-b-[1px] border-sky-200 text-center">
+              <h1 className="sm:text-[22px] text-[17px] py-3 px-au to border-b-[1px] border-sky-200 text-center">
                 <b>Add {selectedValue} data</b>
               </h1>
               <div className="w-[100%] h-[fit-content] pt-4 text-black">
@@ -399,7 +397,6 @@ function PostData() {
                     </label>
                   </div>
                   <div className=" w-[100%] justify-start ">
-                   
                     <textarea
                       name="description"
                       value={values.description}
@@ -417,7 +414,6 @@ function PostData() {
 
                 <div className="w-[90%] mx-auto md:text-[17px] mb-3 mt-4 pt-3">
                   <div className="mb-2 ">
-
                     <Form.Label className="mx-2">Upload Images</Form.Label>
                     <input
                       type="file"
@@ -442,7 +438,7 @@ function PostData() {
                             key={index}
                             className="relative group m-2 border-1 border-dark"
                           >
-                          <FontAwesomeIcon
+                            <FontAwesomeIcon
                               icon={faCircleXmark}
                               className="text-[20px] absolute ms-[90%] mt-[-9%] z-[10] text-red-500 cursor-pointer hover:text-red-600"
                               onClick={() => handleDeleteImage(index)}
@@ -451,9 +447,7 @@ function PostData() {
                               src={URL.createObjectURL(image)}
                               alt={`Image ${index}`}
                               className="max-w-[100px] max-h-[100px] relative mr-2 rounded-md mx-auto my-auto"
-
                             />
-                            
                           </div>
                         ))}
                       </div>
@@ -506,7 +500,6 @@ function PostData() {
                                 className="relative w-[30px] h-[30px] ms-[15px] my-1 rounded-md"
                                 style={{ backgroundColor: color }}
                                 // onClick={() => handleDeleteCard(color)}
-
                               ></div>
                             </div>
                           </div>
@@ -670,6 +663,27 @@ function PostData() {
                     />
                     {errors.Product_code && touched.Product_code ? (
                       <p className="text-red-700 ms-2">{errors.Product_code}</p>
+                    ) : null}
+                  </div>
+                </div>
+                <div className="w-[90%] mx-auto md:text-[17px] border-1 my-3">
+                  <div className="w-[100%] flex justify-start">
+                    <label className="md:my-auto text-start my-3">
+                     Minimum product quantity :
+                    </label>
+                  </div>
+                  <div className="w-[100%] justify-start">
+                    <input
+                      type="name"
+                      autoComplete="off"
+                      name="Product_Quantity"
+                      value={values.Product_Quantity}
+                      onChange={handleChange}
+                      className="w-[100%] rounded-[10px] py-2 px-3 h-[auto]"
+                      placeholder="Enter the name product"
+                    />
+                    {errors.Product_Quantity && touched.Product_Quantity ? (
+                      <p className="text-red-700 ms-2">{errors.Product_Quantity}</p>
                     ) : null}
                   </div>
                 </div>
