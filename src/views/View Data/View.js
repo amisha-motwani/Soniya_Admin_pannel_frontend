@@ -117,9 +117,7 @@ function View() {
   return (
     <>
       <div fluid className="md:flex block mb-2 justify-between w-[92%] mx-auto">
-        <div className="md:w-[50%] w-[85%] md:my-1 my-2">
-         s
-        </div>
+       
         <div className="md:w-[35%] w-[85%] md:my-1 my-2">
           <input
             type="text"

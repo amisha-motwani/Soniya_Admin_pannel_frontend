@@ -606,7 +606,7 @@ function EditPost() {
                      Minimum product quantity :
                     </label>
                   </div>
-                  <div className=" w-[100%] justify-start md:ps-2">
+                  <div className="w-[100%] justify-start md:ps-2">
                     <input
                       type="text"
                       autoComplete="off"
