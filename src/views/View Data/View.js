@@ -9,6 +9,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import { Spinner } from "react-bootstrap";
 import BASE_URL from "../../API/Api";
+import Form from "react-bootstrap/Form";
+
 
 function View() {
   const secretKey = sessionStorage.getItem("secreteKey");
@@ -18,9 +20,6 @@ function View() {
   const [selectedValue, setSelectedValue] = useState("TShirt");
   const [searchedProductCode, setSearchedProductCode] = useState("");
 
-  const handleSelectChange = (e) => {
-    setSelectedValue(e.target.value);
-  };
 
   //-----------------View data logic-----------------
 
@@ -93,6 +92,11 @@ function View() {
     }
   };
 
+  const handleSelectChange = (e) => {
+    setSelectedValue(e.target.value);
+  };
+
+
   useEffect(() => {
     fetchData();
   }, [selectedValue, searchedProductCode]);
@@ -117,7 +121,31 @@ function View() {
   return (
     <>
       <div fluid className="md:flex block mb-2 justify-between w-[92%] mx-auto">
-       
+      <div className="md:w-[70%] w-[85%]">
+          <Form.Select
+            aria-label="Default select example"
+            onChange={handleSelectChange}
+            style={{ width: "100%" }}
+          >
+            <option value="TShirt">Add T-Shirt </option>
+            <option value="WorkTShirt">Add Work T-Shirt </option>
+            <option value="PoloTShirt">Add Polo T-Shirt </option>
+            <option value="PromotionalTShirt">Add Promotional T-Shirt </option>
+            <option value="RunningTShirt">Add Running T-Shirt </option>
+            <option value="SandowsTShirt">Add Sandows T-Shirt </option>
+            <option value="KabbadiShirt">Add Kabbadi T-Shirt </option>
+
+            <option value="Hoodies">Add Hoodies</option>
+            <option value="Tracksuits">Add Tracksuits</option>
+            <option value="Sweatshirts">Add Sweatshirts</option>
+            <option value="Jackets">Add Jackets</option>
+            <option value="Bottoms">Add Bottoms</option>
+            <option value="Uniform">Add School Uniform</option>
+            <option value="Jersey">Add Jersey</option>
+            <option value="CricketKit">Add Cricket Kit</option>
+            <option value="Accessories">Add Accessories</option>
+          </Form.Select>
+        </div>
         <div className="md:w-[35%] w-[85%] md:my-1 my-2">
           <input
             type="text"
