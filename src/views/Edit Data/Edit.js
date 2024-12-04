@@ -149,10 +149,8 @@ function EditPost() {
     formData.append("sleeves_type", sleeveType);
     formData.append("printing_area", printingArea);
     formData.append("printing_charges", printingCharges);
-    formData.append("Product_Quantity)", productQuantity);
+    formData.append("Product_Quantity", productQuantity);
     formData.append("Product_code", productCode);
-
-
 
     // Prepare an array to store image names
     const imageNames = [];
