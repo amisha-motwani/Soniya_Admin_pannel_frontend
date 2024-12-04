@@ -338,7 +338,7 @@ function PostData() {
 
             <option value="Hoodies">Add Hoodies</option>
             <option value="Tracksuits">Add Tracksuits</option>
-            <option value="Sweat">Add Sweatshirts</option>
+            <option value="Sweaters">Add Sweatshirts</option>
             <option value="Jackets">Add Jackets</option>
             <option value="Bottoms">Add Bottoms</option>
             <option value="Uniform">Add School Uniform</option>
@@ -411,7 +411,14 @@ function PostData() {
                     ) : null}
                   </div>
                 </div>
-
+                <div className="w-[90%] mx-auto md:text-[17px]">
+                  <div className=" w-[100%] flex justify-start">
+                    <label className=" my-3">Category :</label>
+                  </div>
+                  <div className="w-[100%] justify-start">
+                   <h1></h1> <button>Edit?</button>
+                  </div>
+                </div>
                 <div className="w-[90%] mx-auto md:text-[17px] mb-3 mt-4 pt-3">
                   <div className="mb-2 ">
                     <Form.Label className="mx-2">Upload Images</Form.Label>
