@@ -345,7 +345,7 @@ function EditPost() {
     setPrintingCharges(e.target.value);
   };
 
-  const handleSelectChange = (e) => {
+  const handleCategoryChange = (e) => {
     setCategoryValue(e.target.value);
   };
 

@@ -120,7 +120,7 @@ function View() {
   return (
     <>
       <div fluid className="md:flex block mb-2 justify-between w-[92%] mx-auto">
-      <div className="md:w-[70%] w-[85%]">
+      <div className="md:w-[65%] w-[85%] md:mt-1 my-2 bg-blue-400">
           <Form.Select
             aria-label="Default select example"
             onChange={handleSelectChange}
@@ -145,7 +145,7 @@ function View() {
             <option value="Accessories">Add Accessories</option>
           </Form.Select>
         </div>
-        <div className="md:w-[35%] w-[85%] md:my-1 my-2">
+        <div className="md:w-[30%] w-[85%] md:my-1 my-2 bg-pink-700">
           <input
             type="text"
             placeholder="Search product code"
