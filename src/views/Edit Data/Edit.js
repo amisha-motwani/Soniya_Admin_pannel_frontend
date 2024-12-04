@@ -118,9 +118,12 @@ function EditPost() {
   const [editImage, setEditImage] = useState(false);
   const [apiResponse, setApiResponse] = useState();
   const [editSizes, setEditSizes] = useState(false);
+  const [editCategory, setEditCategory] = useState(false);
   const [editColors, setEditColors] = useState(false);
   const [openColorCard, setOpenColorCard] = useState(false);
   const [selectedColor, setSelectedColor] = useState("");
+  const [categoryValue, setCategoryValue] = useState("");
+
   const [confirmColor, setConfirmColor] = useState(false);
   const [deleteColorCard, setDeleteColorCard] = useState(false);
   const [editPrintingCharges, setEditPrintingCharges] = useState(false);
@@ -143,6 +146,7 @@ function EditPost() {
     const formData = new FormData();
     formData.append("title", name);
     formData.append("fabric", fabric);
+    formData.append("category", categoryValue);
     formData.append("description", description);
     formData.append("price", price);
     formData.append("color", colors.join(","));
@@ -315,6 +319,10 @@ function EditPost() {
     setEditSizes(true);
   };
 
+  const handleEditCategory = () => {
+    setEditCategory(true);
+  };
+
   const handleEditCollarType = () => {
     setEditCollar(true);
   };
@@ -335,6 +343,10 @@ function EditPost() {
   };
   const handlePrintingCharges = (e) => {
     setPrintingCharges(e.target.value);
+  };
+
+  const handleSelectChange = (e) => {
+    setCategoryValue(e.target.value);
   };
 
   console.log("colors", colors);
@@ -430,7 +442,7 @@ function EditPost() {
                 <div className="w-[90%] mx-auto md:text-[17px] mb-3">
                   <div className="w-[100%] flex  justify-start">
                     <label className="md:my-auto md:text-end text-start my-3">
-                      Name of the product :
+                      Name of the product:
                     </label>
                   </div>
                   <div className=" w-[100%] justify-start md:ps-2">
@@ -447,7 +459,7 @@ function EditPost() {
                 </div>
                 <div className=" w-[90%]  md:text-[17px] my-3 mx-auto">
                   <div className="  w-[100%] flex  justify-start">
-                    <label className="md:my-auto my-3">Description :</label>
+                    <label className="md:my-auto my-3">Description:</label>
                   </div>
                   <div className=" w-[100%] justify-start md:ps-2">
                     <textarea
@@ -460,13 +472,68 @@ function EditPost() {
                   </div>
                 </div>
 
-                {editSizes ? (
+                {editCategory ? (
                   <>
                     <div className="w-[90%] mx-auto  md:text-[17px] my-3">
                       <div className=" w-[100%] flex  justify-start">
                         <label className="md:my-auto my-3">
-                          Choose sizes :
+                          Choose Category:
                         </label>
+                      </div>
+
+                      <div className=" w-[100%] justify-start ps-2 gap-3 flex flex-wrap items-center ">
+                        <Form.Select
+                          aria-label="Default select example"
+                          onChange={handleCategoryChange}
+                          style={{ width: "100%" }}
+                        >
+                          <option value="TShirt">T-Shirt </option>
+                          <option value="Work">Work T-Shirt </option>
+                          <option value="Polo">Polo T-Shirt </option>
+                          <option value="Promotional">
+                            Promotional T-Shirt{" "}
+                          </option>
+                          <option value="Running">Running T-Shirt </option>
+                          <option value="Sandows">Sandows T-Shirt </option>
+                          <option value="Kabbadi">Kabbadi T-Shirt </option>
+
+                          <option value="Hoodies">Hoodies</option>
+                          <option value="Tracksuits">Tracksuits</option>
+                          <option value="Sweaters">Sweatshirts</option>
+                          <option value="Jackets">Jackets</option>
+                          <option value="Bottoms">Bottoms</option>
+                          <option value="Uniform">School Uniform</option>
+                          <option value="Jersey">Jersey</option>
+                          <option value="CricketKit">Cricket Kit</option>
+                          <option value="Accessories">Accessories</option>
+                        </Form.Select>
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="w-[90%] mx-auto  md:text-[17px] my-3">
+                      <div className=" w-[100%] flex  justify-start">
+                        <label className="md:my-auto">Category:</label>
+                      </div>
+                      <div className="w-[100%] justify-start ps-2 gap-3 flex items-center ">
+                        {data.category}
+                        <h1
+                          className="text-blue-900 text-[17px] underline mt-2 ms-2 cursor-pointer"
+                          onClick={handleEditCategory}
+                        >
+                          Edit Sizes?
+                        </h1>
+                      </div>
+                    </div>
+                  </>
+                )}
+
+                {editSizes ? (
+                  <>
+                    <div className="w-[90%] mx-auto  md:text-[17px] my-3">
+                      <div className=" w-[100%] flex  justify-start">
+                        <label className="md:my-auto my-3">Choose sizes:</label>
                       </div>
 
                       <div className=" w-[100%] justify-start ps-2 gap-3 flex flex-wrap items-center ">
@@ -498,7 +565,7 @@ function EditPost() {
                   <>
                     <div className="w-[90%] mx-auto  md:text-[17px] my-3">
                       <div className=" w-[100%] flex  justify-start">
-                        <label className="md:my-auto">Available Sizes :</label>
+                        <label className="md:my-auto">Available Sizes:</label>
                       </div>
                       <div className="w-[100%] justify-start ps-2 gap-3 flex items-center ">
                         {data.size}
@@ -515,9 +582,7 @@ function EditPost() {
 
                 <div className=" w-[90%] mx-auto  md:text-[17px] my-3">
                   <div className="  w-[100%] flex  justify-start">
-                    <label className="md:my-auto my-3">
-                      Available colors :
-                    </label>
+                    <label className="md:my-auto my-3">Available colors:</label>
                   </div>
                   <div className=" w-[100%] justify-start flex flex-wrap items-center gap-2 ps-2">
                     <div className="w-[30px]">
@@ -529,8 +594,6 @@ function EditPost() {
                       />
                     </div>
                     <div className="flex gap-3 flex-wrap w-[90%]">
-                    
-
                       {colors?.map((currentColor, index) => (
                         <div key={index} className="relative group">
                           <FontAwesomeIcon
@@ -543,7 +606,9 @@ function EditPost() {
                             style={{ backgroundColor: currentColor }}
                             onClick={() => handleDeleteCard(currentColor)} // Make sure you have the handleDeleteCard function
                           ></div>
-                          <h1 className="text-sm mt-1 text-center">{currentColor}</h1>
+                          <h1 className="text-sm mt-1 text-center">
+                            {currentColor}
+                          </h1>
                         </div>
                       ))}
 
@@ -568,7 +633,7 @@ function EditPost() {
 
                 <div className=" w-[90%] mx-auto  md:text-[17px] my-3">
                   <div className="  w-[100%] flex  justify-start">
-                    <label className="md:my-auto my-3">Fabric :</label>
+                    <label className="md:my-auto my-3">Fabric:</label>
                   </div>
                   <div className=" w-[100%] justify-start md:ps-2">
                     <input
@@ -601,7 +666,7 @@ function EditPost() {
                 <div className=" w-[90%] mx-auto md:text-[17px] mb-3">
                   <div className="w-[100%] flex  justify-start">
                     <label className="md:my-auto md:text-end text-start my-3">
-                     Minimum product quantity :
+                      Minimum product quantity :
                     </label>
                   </div>
                   <div className="w-[100%] justify-start md:ps-2">
@@ -635,9 +700,7 @@ function EditPost() {
                   <>
                     <div className="w-[90%] mx-auto md:text-[17px] my-3">
                       <div className="w-[100%] flex  justify-start">
-                        <label className="text-start my-3">
-                          Collar Types :
-                        </label>
+                        <label className="text-start my-3">Collar Types:</label>
                       </div>
                       <div className="w-[100%] flex flex-wrap gap-3 justify-start md:ps-2">
                         {Object.keys(collarTypes).map((collar) => (
@@ -662,7 +725,7 @@ function EditPost() {
                   <>
                     <div className="w-[90%] mx-auto  md:text-[17px] my-3">
                       <div className=" w-[100%] flex  justify-start">
-                        <label className="md:my-auto">Collar type :</label>
+                        <label className="md:my-auto">Collar type:</label>
                       </div>
                       <div className="w-[100%] justify-start ps-2 gap-3 flex items-center ">
                         {selectedCollars}
@@ -699,7 +762,7 @@ function EditPost() {
                   <>
                     <div className="w-[90%] mx-auto md:text-[17px] my-3">
                       <div className=" w-[100%] flex  justify-start">
-                        <label className="md:my-auto">Sleeves type :</label>
+                        <label className="md:my-auto">Sleeves type:</label>
                       </div>
                       <div className="w-[100%] justify-start ps-2 gap-3 flex items-center ">
                         {data.sleeves_type}
@@ -735,7 +798,7 @@ function EditPost() {
                   <>
                     <div className="w-[90%] mx-auto  md:text-[17px] my-3">
                       <div className=" w-[100%] flex  justify-start">
-                        <label className="md:my-auto">Printing charges :</label>
+                        <label className="md:my-auto">Printing charges:</label>
                       </div>
                       <div className="w-[100%] justify-start ps-2 gap-3 flex items-center ">
                         {data.printing_charges}
@@ -771,7 +834,7 @@ function EditPost() {
                   <>
                     <div className="w-[90%] mx-auto  md:text-[17px] my-3">
                       <div className=" w-[100%] flex  justify-start">
-                        <label className="md:my-auto">Printing area :</label>
+                        <label className="md:my-auto">Printing area:</label>
                       </div>
                       <div className="w-[100%] justify-start ps-2 gap-3 flex items-center ">
                         {data.printing_area}
