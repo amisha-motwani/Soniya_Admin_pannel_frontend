@@ -329,16 +329,16 @@ function PostData() {
             style={{ width: "100%" }}
           >
             <option value="TShirt">Add T-Shirt </option>
-            <option value="WorkTShirt">Add Work T-Shirt </option>
-            <option value="PoloTShirt">Add Polo T-Shirt </option>
-            <option value="PromotionalTShirt">Add Promotional T-Shirt </option>
-            <option value="RunningTShirt">Add Running T-Shirt </option>
-            <option value="SandowsTShirt">Add Sandows T-Shirt </option>
-            <option value="KabbadiShirt">Add Kabbadi T-Shirt </option>
+            <option value="Work">Add Work T-Shirt </option>
+            <option value="Polo">Add Polo T-Shirt </option>
+            <option value="Promotional">Add Promotional T-Shirt </option>
+            <option value="Running">Add Running T-Shirt </option>
+            <option value="Sandows">Add Sandows T-Shirt </option>
+            <option value="Kabbadi">Add Kabbadi T-Shirt </option>
 
             <option value="Hoodies">Add Hoodies</option>
             <option value="Tracksuits">Add Tracksuits</option>
-            <option value="Sweatshirts">Add Sweatshirts</option>
+            <option value="Sweat">Add Sweatshirts</option>
             <option value="Jackets">Add Jackets</option>
             <option value="Bottoms">Add Bottoms</option>
             <option value="Uniform">Add School Uniform</option>
