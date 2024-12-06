@@ -372,7 +372,7 @@ function PostData() {
                 <div className="w-[90%] mx-auto md:text-[17px] border-1 my-3">
                   <div className="w-[100%] flex justify-start">
                     <label className="md:my-auto text-start my-3">
-                      Name of the product :
+                      Name of the product:
                     </label>
                   </div>
                   <div className="w-[100%] justify-start">
@@ -393,7 +393,7 @@ function PostData() {
                 <div className="w-[90%] mx-auto md:text-[17px] my-3">
                   <div className="w-[100%] flex  justify-start">
                     <label className="md:my-auto text-start my-3">
-                      Description :
+                      Description:
                     </label>
                   </div>
                   <div className=" w-[100%] justify-start ">
@@ -457,7 +457,7 @@ function PostData() {
 
                 <div className="w-[90%] mx-auto md:text-[17px] my-3">
                   <div className=" w-[100%] flex justify-start">
-                    <label className="text-start my-3">Select colors :</label>
+                    <label className="text-start my-3">Select colors:</label>
                   </div>
                   <div className="w-[100%] justify-start flex flex-wrap items-center gap-2 ps-2">
                     <div className="w-[30px]">
@@ -513,7 +513,7 @@ function PostData() {
                 </div>
                 <div className="w-[90%] mx-auto md:text-[17px]">
                   <div className=" w-[100%] flex justify-start">
-                    <label className=" my-3">Fabric :</label>
+                    <label className=" my-3">Fabric:</label>
                   </div>
                   <div className="w-[100%] justify-start">
                     <input
@@ -530,7 +530,7 @@ function PostData() {
                 </div>
                 <div className="w-[90%] mx-auto md:text-[17px] my-3">
                   <div className="w-[100%] flex justify-start">
-                    <label className=" text-start my-3">Sizes :</label>
+                    <label className=" text-start my-3">Sizes:</label>
                   </div>
                   <div className="w-[100%] flex flex-wrap gap-3 justify-start md:ps-2">
                     {Object.keys(values.checkedSizes).map((size) => (
@@ -556,7 +556,7 @@ function PostData() {
 
                 <div className="w-[90%] mx-auto md:text-[17px] my-3">
                   <div className="w-[100%] flex  justify-start">
-                    <label className="text-start my-3">Collar Types :</label>
+                    <label className="text-start my-3">Collar Types:</label>
                   </div>
                   <div className="w-[100%] flex flex-wrap gap-3 justify-start md:ps-2">
                     {Object.keys(values.checkedCollarTypes).map((collar) => (
@@ -579,7 +579,7 @@ function PostData() {
                 <div className="w-[90%] mx-auto md:text-[17px]">
                   <div className="w-[100%] flex justify-start">
                     <label className=" my-3  text-end">
-                      Price of the product :
+                      Price of the product:
                     </label>
                   </div>
                   <div className="w-[100%] justify-start">
@@ -597,7 +597,7 @@ function PostData() {
                 </div>
                 <div className="w-[95%] mx-auto md:text-[17px] my-3">
                   <div className="sleeve-selection w-[95%] mx-auto my-3">
-                    <Form.Label>Choose Sleeve type</Form.Label>
+                    <Form.Label>Choose Sleeve type:</Form.Label>
                   </div>
                   <div className="sleeve-options w-[95%] mx-auto flex flex-wrap gap-4">
                     <Form.Select
@@ -614,7 +614,7 @@ function PostData() {
 
                 <div className="w-[95%] mx-auto md:text-[17px] my-3">
                   <div className="sleeve-selection w-[95%] mx-auto my-3">
-                    <Form.Label>Choose printing area</Form.Label>
+                    <Form.Label>Choose printing area:</Form.Label>
                   </div>
                   <div className="sleeve-options w-[95%] mx-auto flex flex-wrap gap-4">
                     <Form.Select
@@ -648,7 +648,7 @@ function PostData() {
                 <div className="w-[90%] mx-auto md:text-[17px] border-1 my-3">
                   <div className="w-[100%] flex justify-start">
                     <label className="md:my-auto text-start my-3">
-                      Product code :
+                      Product code:
                     </label>
                   </div>
                   <div className="w-[100%] justify-start">
