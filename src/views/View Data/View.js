@@ -126,23 +126,23 @@ function View() {
             onChange={handleSelectChange}
             style={{ width: "100%" }}
           >
-            <option value="TShirt">Add T-Shirt </option>
-            <option value="Work">Add Work T-Shirt </option>
-            <option value="Polo">Add Polo T-Shirt </option>
-            <option value="Promotional">Add Promotional T-Shirt </option>
-            <option value="Running">Add Running T-Shirt </option>
-            <option value="Sandows">Add Sandows T-Shirt </option>
-            <option value="Kabbadi">Add Kabbadi T-Shirt </option>
+            <option value="TShirt">View T-Shirt data</option>
+            <option value="Work">View Work T-Shirt data</option>
+            <option value="Polo">View Polo T-Shirt data</option>
+            <option value="Promotional">View Promotional T-Shirt data</option>
+            <option value="Running">View Running T-Shirt data</option>
+            <option value="Sandows">View Sandows T-Shirt data</option>
+            <option value="Kabbadi">View Kabbadi T-Shirt data</option>
 
-            <option value="Hoodies">Add Hoodies</option>
-            <option value="Tracksuits">Add Tracksuits</option>
-            <option value="Sweaters">Add Sweatshirts</option>
-            <option value="Jackets">Add Jackets</option>
-            <option value="Bottoms">Add Bottoms</option>
-            <option value="Uniform">Add School Uniform</option>
-            <option value="Jersey">Add Jersey</option>
-            <option value="CricketKit">Add Cricket Kit</option>
-            <option value="Accessories">Add Accessories</option>
+            <option value="Hoodies">View Hoodies data</option>
+            <option value="Tracksuits">View Tracksuits data</option>
+            <option value="Sweaters">View Sweatshirts data</option>
+            <option value="Jackets">View Jackets data</option>
+            <option value="Bottoms">View Bottoms data</option>
+            <option value="Uniform">View School Uniform data</option>
+            <option value="Jersey">View Jersey data</option>
+            <option value="CricketKit">View Cricket Kit data</option>
+            <option value="Accessories">View Accessories data</option>
           </Form.Select>
         </div>
         <div className="md:w-[30%] w-[85%] md:my-1 my-2">
